@@ -1327,6 +1327,134 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 2016187232}
   healthSlider: {fileID: 193369160}
+--- !u!1 &199433390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 199433392}
+  - component: {fileID: 199433391}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &199433391
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199433390}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 75f8021c944337a4ab0bf8facd17716e, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &199433392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199433390}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.825212, y: 2.7106104, z: 1.8268833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &211026236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,6 +2041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LuckyBox (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
@@ -2890,6 +3022,10 @@ PrefabInstance:
       value: LuckyBox (4)
       objectReference: {fileID: 0}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -3384,6 +3520,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LuckyBox (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
@@ -7875,6 +8015,10 @@ PrefabInstance:
       value: LuckyBox (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -8639,6 +8783,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LuckyBox (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
@@ -12913,12 +13061,12 @@ MonoBehaviour:
   playerMovement: {fileID: 2016187234}
   playerHealth: {fileID: 2016187232}
   firstPersonLook: {fileID: 2016187236}
-  speedBoostDuration: 21.8
-  invisibilityDuration: 10.6
-  infiniteSprintDuration: 30.7
-  superJumpDuration: 18.8
-  speedMultiplier: 100
-  jumpMultiplier: 100
+  speedBoostDuration: 10
+  invisibilityDuration: 5.7
+  infiniteSprintDuration: 10
+  superJumpDuration: 10
+  speedMultiplier: 20
+  jumpMultiplier: 20
   globalDurationMultiplier: 1
   globalEffectMultiplier: 1
 --- !u!1 &2028549247
@@ -14100,6 +14248,10 @@ PrefabInstance:
       value: LuckyBox
       objectReference: {fileID: 0}
     - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 199433391}
+    - target: {fileID: 8386972563635543369, guid: d92816e087399d04e96a61d044ffe3b7, type: 3}
       propertyPath: availableEffects.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -14313,3 +14465,4 @@ SceneRoots:
   - {fileID: 1114402289}
   - {fileID: 1617724729}
   - {fileID: 1932797327}
+  - {fileID: 199433392}

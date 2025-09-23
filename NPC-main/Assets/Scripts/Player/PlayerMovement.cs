@@ -3,18 +3,30 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 4f;
+    [Header("Movement")] [SerializeField] public float moveSpeed = 4f;
     [SerializeField] private float gravity = -9.81f;
 
-    [Header("Sprint")]
-    [SerializeField] private float sprintMultiplier = 1.5f;
+    [Header("Sprint")] [SerializeField] private float sprintMultiplier = 1.5f;
     [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
-    [SerializeField] private float sprintMaxDuration = 4f;   
-    [SerializeField] private float sprintCooldown = 2f;      
+    [SerializeField] private float sprintMaxDuration = 4f;
+    [SerializeField] private float sprintCooldown = 2f;
+    
+    public bool IsSprintOnCooldown => sprintOnCooldown;
+    public float CooldownRemaining => Mathf.Max(0f, cooldownTimer);
+ 
 
     [Header("Jump")]
     [SerializeField] private float jumpHeight = 1.5f;
+
+    [Header("Power-Up Effects")] [SerializeField]
+    private float speedBoostMultiplier = 2f;
+
+    [SerializeField] private float jumpBoostMultiplier = 2f;
+    
+    
+
+    private PowerUpManager powerUpManager;
+
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -32,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        powerUpManager = GetComponent<PowerUpManager>();
+        if (powerUpManager == null)
+        {
+            powerUpManager = FindObjectOfType<PowerUpManager>();
+        }
     }
 
     private void Update()
@@ -49,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (velocity.y < 0f)
             {
-                velocity.y = -2f; 
+                velocity.y = -2f;
             }
         }
 
@@ -59,7 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
         bool hasInput = move.sqrMagnitude > 0.0001f;
 
-        if (sprintOnCooldown)
+        // === MODIFICACIÓN: Sprint infinito ===
+        bool hasInfiniteSprint = powerUpManager != null && powerUpManager.HasInfiniteSprint;
+
+        if (sprintOnCooldown && !hasInfiniteSprint) // Solo aplicar cooldown si no tiene sprint infinito
         {
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0f)
@@ -69,31 +89,41 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        bool wantsSprint = Input.GetKey(sprintKey) && hasInput && !sprintOnCooldown;
+        bool wantsSprint = Input.GetKey(sprintKey) && hasInput && (!sprintOnCooldown || hasInfiniteSprint);
 
         float currentSpeed = moveSpeed;
+
+        // === MODIFICACIÓN: Speed boost ===
+        if (powerUpManager != null && powerUpManager.IsSpeedBoostActive)
+        {
+            currentSpeed *= speedBoostMultiplier;
+        }
 
         if (wantsSprint)
         {
             IsSprinting = true;
             currentSpeed *= sprintMultiplier;
-            sprintTimer += Time.deltaTime;
 
-            if (sprintTimer >= sprintMaxDuration)
+            if (!hasInfiniteSprint) // Solo consumir stamina si no tiene sprint infinito
             {
-                sprintOnCooldown = true;
-                cooldownTimer = sprintCooldown;
-                IsSprinting = false;        
-                currentSpeed = moveSpeed;   
+                sprintTimer += Time.deltaTime;
+
+                if (sprintTimer >= sprintMaxDuration)
+                {
+                    sprintOnCooldown = true;
+                    cooldownTimer = sprintCooldown;
+                    IsSprinting = false;
+                    currentSpeed = moveSpeed;
+                }
             }
         }
         else
         {
             IsSprinting = false;
 
-            if (!sprintOnCooldown && (!Input.GetKey(sprintKey) || !hasInput))
+            if (!sprintOnCooldown && (!Input.GetKey(sprintKey) || !hasInput) && !hasInfiniteSprint)
             {
-                sprintTimer = 0f; 
+                sprintTimer = 0f;
             }
         }
 
@@ -105,10 +135,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-    }
+        float currentJumpHeight = jumpHeight;
 
-    public bool IsSprintOnCooldown => sprintOnCooldown;
-    public float SprintTime => sprintTimer;
-    public float CooldownRemaining => Mathf.Max(0f, cooldownTimer);
+        // === MODIFICACIÓN: Super salto ===
+        if (powerUpManager != null && powerUpManager.HasSuperJump)
+        {
+            currentJumpHeight *= jumpBoostMultiplier;
+        }
+
+        velocity.y = Mathf.Sqrt(currentJumpHeight * -2f * gravity);
+        
+    }
+    
+    
 }

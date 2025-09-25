@@ -240,7 +240,6 @@ GameObject:
   - component: {fileID: 35703203}
   - component: {fileID: 35703202}
   - component: {fileID: 35703201}
-  - component: {fileID: 35703200}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -264,24 +263,6 @@ Transform:
   - {fileID: 1933683424}
   m_Father: {fileID: 595217737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &35703200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35703198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &35703201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -545,7 +526,6 @@ GameObject:
   - component: {fileID: 53333367}
   - component: {fileID: 53333366}
   - component: {fileID: 53333365}
-  - component: {fileID: 53333364}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -569,24 +549,6 @@ Transform:
   - {fileID: 549337518}
   m_Father: {fileID: 372047479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &53333364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53333362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &53333365
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -670,7 +632,6 @@ GameObject:
   - component: {fileID: 89053639}
   - component: {fileID: 89053638}
   - component: {fileID: 89053637}
-  - component: {fileID: 89053636}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -693,24 +654,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1975033953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &89053636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89053634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &89053637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1004,7 +947,6 @@ GameObject:
   - component: {fileID: 162230671}
   - component: {fileID: 162230670}
   - component: {fileID: 162230669}
-  - component: {fileID: 162230668}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -1028,24 +970,6 @@ Transform:
   - {fileID: 894758526}
   m_Father: {fileID: 592704028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &162230668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162230666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &162230669
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1505,7 +1429,7 @@ MonoBehaviour:
     m_Bits: 8
   avoidDistance: 2
   avoidStrength: 1
-  lineOfSight: {fileID: 592704024}
+  lineOfSight: {fileID: 0}
 --- !u!143 &211026238
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2272,7 +2196,6 @@ GameObject:
   - component: {fileID: 307267745}
   - component: {fileID: 307267744}
   - component: {fileID: 307267743}
-  - component: {fileID: 307267742}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -2295,24 +2218,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1620208770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &307267742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307267740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &307267743
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2396,7 +2301,6 @@ GameObject:
   - component: {fileID: 321232769}
   - component: {fileID: 321232768}
   - component: {fileID: 321232767}
-  - component: {fileID: 321232766}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -2419,24 +2323,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484508066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &321232766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 321232764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &321232767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2717,7 +2603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 13
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -2856,7 +2742,6 @@ GameObject:
   - component: {fileID: 434471329}
   - component: {fileID: 434471328}
   - component: {fileID: 434471327}
-  - component: {fileID: 434471326}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -2880,24 +2765,6 @@ Transform:
   - {fileID: 1957224823}
   m_Father: {fileID: 592704028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &434471326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 434471324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &434471327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3646,7 +3513,6 @@ GameObject:
   - component: {fileID: 484508070}
   - component: {fileID: 484508069}
   - component: {fileID: 484508068}
-  - component: {fileID: 484508067}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -3670,24 +3536,6 @@ Transform:
   - {fileID: 321232765}
   m_Father: {fileID: 1057643666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &484508067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484508065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &484508068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3802,7 +3650,6 @@ GameObject:
   - component: {fileID: 549337522}
   - component: {fileID: 549337521}
   - component: {fileID: 549337520}
-  - component: {fileID: 549337519}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -3825,24 +3672,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 53333363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &549337519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549337517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &549337520
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4438,7 +4267,7 @@ GameObject:
   - component: {fileID: 592704027}
   - component: {fileID: 592704026}
   - component: {fileID: 592704025}
-  - component: {fileID: 592704024}
+  - component: {fileID: 592704029}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4446,24 +4275,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &592704024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592704023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 13
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &592704025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4552,6 +4363,24 @@ Transform:
   - {fileID: 434471325}
   m_Father: {fileID: 211026242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592704029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592704023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 13
+  fieldOfViewAngle: 90
+  viewHeight: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &595217732
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,7 +4415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 13
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -4690,7 +4519,6 @@ GameObject:
   - component: {fileID: 600825221}
   - component: {fileID: 600825220}
   - component: {fileID: 600825219}
-  - component: {fileID: 600825218}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -4714,24 +4542,6 @@ Transform:
   - {fileID: 1961139416}
   m_Father: {fileID: 1885852758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &600825218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600825216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &600825219
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4846,7 +4656,6 @@ GameObject:
   - component: {fileID: 625870534}
   - component: {fileID: 625870533}
   - component: {fileID: 625870532}
-  - component: {fileID: 625870531}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -4869,24 +4678,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1799719782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &625870531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625870529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &625870532
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5305,7 +5096,6 @@ GameObject:
   - component: {fileID: 731541851}
   - component: {fileID: 731541850}
   - component: {fileID: 731541849}
-  - component: {fileID: 731541848}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -5328,24 +5118,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1793599069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &731541848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731541846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &731541849
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5640,7 +5412,6 @@ GameObject:
   - component: {fileID: 803021738}
   - component: {fileID: 803021737}
   - component: {fileID: 803021736}
-  - component: {fileID: 803021735}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -5664,24 +5435,6 @@ Transform:
   - {fileID: 816949508}
   m_Father: {fileID: 1834643472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &803021735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803021733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &803021736
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5871,7 +5624,6 @@ GameObject:
   - component: {fileID: 816949512}
   - component: {fileID: 816949511}
   - component: {fileID: 816949510}
-  - component: {fileID: 816949509}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -5894,24 +5646,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 803021734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &816949509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 816949507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &816949510
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6205,7 +5939,6 @@ GameObject:
   - component: {fileID: 880854069}
   - component: {fileID: 880854068}
   - component: {fileID: 880854067}
-  - component: {fileID: 880854066}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -6229,24 +5962,6 @@ Transform:
   - {fileID: 2044493891}
   m_Father: {fileID: 1216099599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &880854066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880854064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &880854067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6575,7 +6290,6 @@ GameObject:
   - component: {fileID: 894758530}
   - component: {fileID: 894758529}
   - component: {fileID: 894758528}
-  - component: {fileID: 894758527}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -6598,24 +6312,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 162230667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &894758527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894758525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &894758528
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6804,7 +6500,6 @@ GameObject:
   - component: {fileID: 920955901}
   - component: {fileID: 920955900}
   - component: {fileID: 920955899}
-  - component: {fileID: 920955898}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -6827,24 +6522,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1196035129}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &920955898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 920955896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &920955899
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7023,9 +6700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 8
+  detectionRange: 7
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -7376,7 +7053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 10
   fieldOfViewAngle: 360
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -7472,7 +7149,6 @@ GameObject:
   - component: {fileID: 1110110390}
   - component: {fileID: 1110110389}
   - component: {fileID: 1110110388}
-  - component: {fileID: 1110110387}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -7496,24 +7172,6 @@ Transform:
   - {fileID: 1443641731}
   m_Father: {fileID: 1223268334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1110110387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110110385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1110110388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7724,7 +7382,6 @@ GameObject:
   - component: {fileID: 1183701318}
   - component: {fileID: 1183701317}
   - component: {fileID: 1183701316}
-  - component: {fileID: 1183701315}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -7748,24 +7405,6 @@ Transform:
   - {fileID: 2028549248}
   m_Father: {fileID: 1834643472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1183701315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183701313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1183701316
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7849,7 +7488,6 @@ GameObject:
   - component: {fileID: 1196035133}
   - component: {fileID: 1196035132}
   - component: {fileID: 1196035131}
-  - component: {fileID: 1196035130}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -7873,24 +7511,6 @@ Transform:
   - {fileID: 920955897}
   m_Father: {fileID: 372047479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1196035130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196035128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1196035131
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8384,9 +8004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 8
+  detectionRange: 7
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -8422,9 +8042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 8
+  detectionRange: 7
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -9255,7 +8875,6 @@ GameObject:
   - component: {fileID: 1443641735}
   - component: {fileID: 1443641734}
   - component: {fileID: 1443641733}
-  - component: {fileID: 1443641732}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -9278,24 +8897,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1110110386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1443641732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443641730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1443641733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9946,7 +9547,6 @@ GameObject:
   - component: {fileID: 1573876356}
   - component: {fileID: 1573876355}
   - component: {fileID: 1573876354}
-  - component: {fileID: 1573876353}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -9969,24 +9569,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1744074948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1573876353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573876351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1573876354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10407,7 +9989,6 @@ GameObject:
   - component: {fileID: 1620208774}
   - component: {fileID: 1620208773}
   - component: {fileID: 1620208772}
-  - component: {fileID: 1620208771}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -10431,24 +10012,6 @@ Transform:
   - {fileID: 307267741}
   m_Father: {fileID: 1216099599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1620208771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620208769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1620208772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10532,7 +10095,6 @@ GameObject:
   - component: {fileID: 1637303397}
   - component: {fileID: 1637303396}
   - component: {fileID: 1637303395}
-  - component: {fileID: 1637303394}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -10555,24 +10117,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1707463013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1637303394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637303392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1637303395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10829,7 +10373,6 @@ GameObject:
   - component: {fileID: 1707463017}
   - component: {fileID: 1707463016}
   - component: {fileID: 1707463015}
-  - component: {fileID: 1707463014}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -10853,24 +10396,6 @@ Transform:
   - {fileID: 1637303393}
   m_Father: {fileID: 1223268334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1707463014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707463012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1707463015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11164,7 +10689,6 @@ GameObject:
   - component: {fileID: 1744074952}
   - component: {fileID: 1744074951}
   - component: {fileID: 1744074950}
-  - component: {fileID: 1744074949}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -11188,24 +10712,6 @@ Transform:
   - {fileID: 1573876352}
   m_Father: {fileID: 595217737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1744074949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744074947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1744074950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11455,7 +10961,6 @@ GameObject:
   - component: {fileID: 1777944127}
   - component: {fileID: 1777944126}
   - component: {fileID: 1777944125}
-  - component: {fileID: 1777944124}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -11478,24 +10983,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2061228324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1777944124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777944122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1777944125
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11610,7 +11097,6 @@ GameObject:
   - component: {fileID: 1793599073}
   - component: {fileID: 1793599072}
   - component: {fileID: 1793599071}
-  - component: {fileID: 1793599070}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -11634,24 +11120,6 @@ Transform:
   - {fileID: 731541847}
   m_Father: {fileID: 981032953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1793599070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793599068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1793599071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11735,7 +11203,6 @@ GameObject:
   - component: {fileID: 1799719786}
   - component: {fileID: 1799719785}
   - component: {fileID: 1799719784}
-  - component: {fileID: 1799719783}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -11759,24 +11226,6 @@ Transform:
   - {fileID: 625870530}
   m_Father: {fileID: 1885852758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1799719783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799719781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1799719784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11880,9 +11329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 8
+  detectionRange: 7
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -12039,7 +11488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 13
   fieldOfViewAngle: 90
-  viewHeight: 1.5
+  viewHeight: 0
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
@@ -12321,7 +11770,6 @@ GameObject:
   - component: {fileID: 1933683428}
   - component: {fileID: 1933683427}
   - component: {fileID: 1933683426}
-  - component: {fileID: 1933683425}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -12344,24 +11792,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 35703199}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1933683425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933683423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1933683426
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12445,7 +11875,6 @@ GameObject:
   - component: {fileID: 1957224827}
   - component: {fileID: 1957224826}
   - component: {fileID: 1957224825}
-  - component: {fileID: 1957224824}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -12468,24 +11897,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 434471325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1957224824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957224822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1957224825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12569,7 +11980,6 @@ GameObject:
   - component: {fileID: 1961139420}
   - component: {fileID: 1961139419}
   - component: {fileID: 1961139418}
-  - component: {fileID: 1961139417}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -12592,24 +12002,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 600825217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1961139417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961139415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1961139418
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12693,7 +12085,6 @@ GameObject:
   - component: {fileID: 1975033957}
   - component: {fileID: 1975033956}
   - component: {fileID: 1975033955}
-  - component: {fileID: 1975033954}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -12717,24 +12108,6 @@ Transform:
   - {fileID: 89053635}
   m_Father: {fileID: 981032953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1975033954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975033952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &1975033955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13081,7 +12454,6 @@ GameObject:
   - component: {fileID: 2028549252}
   - component: {fileID: 2028549251}
   - component: {fileID: 2028549250}
-  - component: {fileID: 2028549249}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -13104,24 +12476,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1183701314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2028549249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028549247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &2028549250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13205,7 +12559,6 @@ GameObject:
   - component: {fileID: 2044493895}
   - component: {fileID: 2044493894}
   - component: {fileID: 2044493893}
-  - component: {fileID: 2044493892}
   m_Layer: 0
   m_Name: iris
   m_TagString: Untagged
@@ -13228,24 +12581,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 880854065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2044493892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044493890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &2044493893
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13360,7 +12695,6 @@ GameObject:
   - component: {fileID: 2061228328}
   - component: {fileID: 2061228327}
   - component: {fileID: 2061228326}
-  - component: {fileID: 2061228325}
   m_Layer: 0
   m_Name: eye (1)
   m_TagString: Untagged
@@ -13384,24 +12718,6 @@ Transform:
   - {fileID: 1777944123}
   m_Father: {fileID: 1057643666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2061228325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061228323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 8
-  fieldOfViewAngle: 90
-  viewHeight: 1.5
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &2061228326
 BoxCollider:
   m_ObjectHideFlags: 0

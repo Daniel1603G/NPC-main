@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ===== POWER-UP DATA =====
 [System.Serializable]
 public class PowerUpEffect
 {

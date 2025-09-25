@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 public class PowerUpPickup : MonoBehaviour
@@ -26,7 +25,6 @@ public class PowerUpPickup : MonoBehaviour
     
     private void Awake()
     {
-        // Configurar como trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
         
@@ -37,7 +35,6 @@ public class PowerUpPickup : MonoBehaviour
         startPosition = transform.position;
         objectRenderer = GetComponentInChildren<Renderer>();
         
-        // Configurar efectos predeterminados si no hay ninguno
         if (availableEffects.Count == 0)
         {
             SetupDefaultEffects();
@@ -54,10 +51,8 @@ public class PowerUpPickup : MonoBehaviour
     
     private void AnimatePowerUp()
     {
-        // Rotación
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         
-        // Movimiento de flotación
         float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
         transform.position = new Vector3(startPosition.x, newY, startPosition.z);
     }
@@ -78,7 +73,6 @@ public class PowerUpPickup : MonoBehaviour
         var powerUpManager = other.GetComponent<PowerUpManager>();
         if (powerUpManager == null) return;
         
-        // Usar Roulette Wheel Selection para elegir efecto
         PowerUpEffect selectedEffect = SelectRandomEffect();
         if (selectedEffect != null)
         {
@@ -91,7 +85,6 @@ public class PowerUpPickup : MonoBehaviour
     {
         if (availableEffects.Count == 0) return null;
         
-        // Calcular peso total
         float totalWeight = 0f;
         foreach (var effect in availableEffects)
         {
@@ -100,7 +93,6 @@ public class PowerUpPickup : MonoBehaviour
         
         if (totalWeight <= 0f) return null;
         
-        // Roulette Wheel Selection
         float randomValue = UnityEngine.Random.Range(0f, totalWeight);
         float currentWeight = 0f;
         
@@ -114,7 +106,6 @@ public class PowerUpPickup : MonoBehaviour
             }
         }
         
-        // Fallback
         return availableEffects[availableEffects.Count - 1];
     }
     
@@ -122,18 +113,15 @@ public class PowerUpPickup : MonoBehaviour
     {
         isCollected = true;
         
-        // Efectos visuales y sonoros
         if (pickupSound != null)
             pickupSound.Play();
             
         if (visualEffect != null)
             Instantiate(visualEffect, transform.position, Quaternion.identity);
         
-        // Cambiar color temporalmente
         if (objectRenderer != null)
             objectRenderer.material.color = effect.EffectColor;
         
-        // Ocultar o destruir
         if (respawns)
         {
             StartCoroutine(RespawnAfterDelay());
@@ -154,7 +142,6 @@ public class PowerUpPickup : MonoBehaviour
             isCollected = false;
             gameObject.SetActive(true);
             
-            // Restaurar color original
             if (objectRenderer != null)
                 objectRenderer.material.color = Color.white;
         }

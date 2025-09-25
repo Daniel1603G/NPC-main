@@ -18,23 +18,18 @@ public class PlayerModel : MonoBehaviour, ISpin
     [SerializeField] private AudioSource spinAudioSource;
     [SerializeField] private AudioClip spinSound;
     
-    // Eventos y delegates
     private Action _onSpin = delegate { };
     
-    // Referencias a otros componentes
     private PlayerMovement playerMovement;
     private PlayerHealth playerHealth;
     private PowerUpManager powerUpManager;
     
-    // Materiales originales para el efecto de invisibilidad
     private Material[] originalMaterials;
     private Material[] invisibilityMaterials;
     
-    // Propiedades públicas requeridas por ISpin
     public bool IsDetectable => _isDetectable;
     public Action OnSpin { get => _onSpin; set => _onSpin = value; }
     
-    // Propiedades adicionales útiles
     public Transform[] DetectablePositions => _detectablePositions;
     public Transform Transform => transform;
     public PlayerMovement Movement => playerMovement;
@@ -43,27 +38,22 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void Awake()
     {
-        // Obtener referencias a componentes
         playerMovement = GetComponent<PlayerMovement>();
         playerHealth = GetComponent<PlayerHealth>();
         powerUpManager = GetComponent<PowerUpManager>();
         
-        // Auto-configurar detectablePositions si no están asignadas
         if (_detectablePositions == null || _detectablePositions.Length == 0)
         {
             SetupDefaultDetectablePositions();
         }
         
-        // Auto-configurar renderers si no están asignados
         if (playerRenderers == null || playerRenderers.Length == 0)
         {
             SetupDefaultRenderers();
         }
         
-        // Preparar materiales para efectos visuales
         SetupInvisibilityMaterials();
         
-        // Configurar audio si no está asignado
         if (spinAudioSource == null)
         {
             spinAudioSource = GetComponent<AudioSource>();
@@ -72,16 +62,13 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void Start()
     {
-        // Actualizar visual inicial
         UpdateVisualState();
         
-        // Suscribirse a eventos si es necesario
         _onSpin += OnSpinStateChanged;
     }
     
     private void OnDestroy()
     {
-        // Limpiar eventos
         _onSpin -= OnSpinStateChanged;
     }
     
@@ -91,16 +78,12 @@ public class PlayerModel : MonoBehaviour, ISpin
     {
         _isDetectable = !_isDetectable;
         
-        // Reproducir sonido
         PlaySpinSound();
         
-        // Actualizar visual
         UpdateVisualState();
         
-        // Invocar evento
         _onSpin?.Invoke();
         
-        // Log para debug
         Debug.Log($"Jugador {(IsDetectable ? "ahora es DETECTABLE" : "ahora es INVISIBLE")}");
     }
     
@@ -110,11 +93,9 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void SetupDefaultDetectablePositions()
     {
-        // Crear posiciones detectables por defecto
-        // Cabeza, pecho, pies
+
         _detectablePositions = new Transform[3];
         
-        // Posición de la cabeza (cámara si existe)
         Camera playerCamera = GetComponentInChildren<Camera>();
         if (playerCamera != null)
         {
@@ -122,34 +103,28 @@ public class PlayerModel : MonoBehaviour, ISpin
         }
         else
         {
-            // Crear un punto en la cabeza
             GameObject headPoint = new GameObject("HeadDetectionPoint");
             headPoint.transform.SetParent(transform);
             headPoint.transform.localPosition = new Vector3(0f, 1.8f, 0f);
             _detectablePositions[0] = headPoint.transform;
         }
         
-        // Posición del pecho
         GameObject chestPoint = new GameObject("ChestDetectionPoint");
         chestPoint.transform.SetParent(transform);
         chestPoint.transform.localPosition = new Vector3(0f, 1.0f, 0f);
         _detectablePositions[1] = chestPoint.transform;
         
-        // Posición de los pies (transform principal)
         _detectablePositions[2] = transform;
     }
     
     private void SetupDefaultRenderers()
     {
-        // Obtener todos los renderers del jugador y sus hijos
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         
-        // Filtrar renderers válidos (excluir UI, partículas, etc.)
         System.Collections.Generic.List<Renderer> validRenderers = new System.Collections.Generic.List<Renderer>();
         
         foreach (Renderer renderer in allRenderers)
         {
-            // Excluir renderers de UI y efectos especiales
             if (renderer.gameObject.layer != LayerMask.NameToLayer("UI") && 
                 !(renderer is ParticleSystemRenderer))
             {
@@ -171,13 +146,10 @@ public class PlayerModel : MonoBehaviour, ISpin
         {
             if (playerRenderers[i] != null && playerRenderers[i].material != null)
             {
-                // Guardar material original
                 originalMaterials[i] = playerRenderers[i].material;
                 
-                // Crear material de invisibilidad
                 invisibilityMaterials[i] = new Material(originalMaterials[i]);
                 
-                // Configurar propiedades para transparencia
                 if (invisibilityMaterials[i].HasProperty("_Color"))
                 {
                     Color color = invisibilityTint;
@@ -185,7 +157,6 @@ public class PlayerModel : MonoBehaviour, ISpin
                     invisibilityMaterials[i].SetColor("_Color", color);
                 }
                 
-                // Configurar modo de renderizado para transparencia
                 SetMaterialTransparent(invisibilityMaterials[i]);
             }
         }
@@ -193,8 +164,7 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void SetMaterialTransparent(Material material)
     {
-        // Configurar material para transparencia
-        material.SetFloat("_Mode", 2); // Transparent mode
+        material.SetFloat("_Mode", 2); 
         material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
         material.SetInt("_ZWrite", 0);
@@ -218,13 +188,11 @@ public class PlayerModel : MonoBehaviour, ISpin
             {
                 if (_isDetectable)
                 {
-                    // Restaurar material original
                     if (originalMaterials[i] != null)
                         playerRenderers[i].material = originalMaterials[i];
                 }
                 else
                 {
-                    // Aplicar material de invisibilidad
                     if (invisibilityMaterials[i] != null)
                         playerRenderers[i].material = invisibilityMaterials[i];
                 }
@@ -242,10 +210,6 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void OnSpinStateChanged()
     {
-        // Aquí puedes agregar efectos adicionales cuando cambia el estado
-        // Por ejemplo: partículas, screen shake, etc.
-        
-        // Ejemplo: efecto de partículas simple
         Debug.Log($"Estado de detección cambiado: {(IsDetectable ? "Visible" : "Invisible")}");
     }
     
@@ -253,9 +217,6 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     #region Public Utility Methods
     
-    /// <summary>
-    /// Fuerza el estado de detectabilidad sin activar efectos
-    /// </summary>
     public void SetDetectable(bool detectable, bool playEffects = true)
     {
         bool changed = _isDetectable != detectable;
@@ -274,9 +235,6 @@ public class PlayerModel : MonoBehaviour, ISpin
         }
     }
     
-    /// <summary>
-    /// Obtiene información completa del estado del jugador
-    /// </summary>
     public string GetPlayerStatus()
     {
         string status = $"=== ESTADO DEL JUGADOR ===\n";
@@ -303,7 +261,6 @@ public class PlayerModel : MonoBehaviour, ISpin
     
     private void OnDrawGizmosSelected()
     {
-        // Dibujar posiciones detectables
         if (_detectablePositions != null)
         {
             Gizmos.color = IsDetectable ? Color.red : Color.green;

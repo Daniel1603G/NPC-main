@@ -23,13 +23,11 @@ public class PowerUpManager : MonoBehaviour
     [Header("Global Settings")]
     [SerializeField, Range(0.1f, 3f)] private float globalDurationMultiplier = 1f;
     [SerializeField, Range(0.1f, 3f)] private float globalEffectMultiplier = 1f;
-    // Estados de efectos activos
     private bool isSpeedBoostActive = false;
     private bool isInvisible = false;
     private bool hasInfiniteSprint = false;
     private bool hasSuperJump = false;
     
-    // Referencias a componentes que implementan ISpin
     private ISpin spinComponent;
     
     public bool IsInvisible => isInvisible;
@@ -42,7 +40,6 @@ public class PowerUpManager : MonoBehaviour
     
     private void Awake()
     {
-        // Auto-asignar componentes si no están asignados
         if (playerMovement == null)
             playerMovement = GetComponent<PlayerMovement>();
             
@@ -94,7 +91,6 @@ public class PowerUpManager : MonoBehaviour
                 break;
         }
         
-        // Mostrar mensaje en consola
         Debug.Log($"¡Power-up activado! {effect.EffectName}: {effect.Description}");
     }
     
@@ -104,7 +100,6 @@ public class PowerUpManager : MonoBehaviour
         
         isSpeedBoostActive = true;
         
-        // Aplicar boost de velocidad (necesitarías modificar PlayerMovement para esto)
         Debug.Log("¡Velocidad aumentada!");
         
         yield return new WaitForSeconds(duration);
@@ -119,17 +114,14 @@ public class PowerUpManager : MonoBehaviour
         
         isInvisible = true;
         
-        // Obtener referencia al PlayerModel
         var playerModel = GetComponent<PlayerModel>();
         
         if (playerModel != null)
         {
-            // Guardar estado actual de detectabilidad
             bool wasAlreadyInvisible = !playerModel.IsDetectable;
             
             if (!wasAlreadyInvisible)
             {
-                // Cambiar a invisible sin efectos visuales/sonoros del spin
                 playerModel.SetDetectable(false, false);
                 Debug.Log("¡Power-up de invisibilidad activado!");
             }
@@ -140,7 +132,6 @@ public class PowerUpManager : MonoBehaviour
             
             yield return new WaitForSeconds(duration);
             
-            // Restaurar visibilidad solo si la activamos nosotros
             if (!wasAlreadyInvisible)
             {
                 playerModel.SetDetectable(true, false);
@@ -149,7 +140,6 @@ public class PowerUpManager : MonoBehaviour
         }
         else
         {
-            // Fallback si no hay PlayerModel
             Debug.Log("¡Invisible a los enemigos! (sin PlayerModel)");
             yield return new WaitForSeconds(duration);
             Debug.Log("Invisibilidad terminada");
@@ -197,7 +187,6 @@ public class PowerUpManager : MonoBehaviour
     {
         float baseDuration = 0f;
         
-        // Normalizar nombre para comparación
         string normalizedName = effectName.ToLower().Trim();
         
         switch (normalizedName)
@@ -228,7 +217,7 @@ public class PowerUpManager : MonoBehaviour
             case "healing":
             case "heal":
             case "health":
-                return 0f; // Instantaneous
+                return 0f; 
         }
         
         return baseDuration * globalDurationMultiplier;

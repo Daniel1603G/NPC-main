@@ -22,11 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private float speedBoostMultiplier = 2f;
 
     [SerializeField] private float jumpBoostMultiplier = 2f;
-    
-    
 
     private PowerUpManager powerUpManager;
-
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -76,10 +73,9 @@ public class PlayerMovement : MonoBehaviour
 
         bool hasInput = move.sqrMagnitude > 0.0001f;
 
-        // === MODIFICACIÓN: Sprint infinito ===
         bool hasInfiniteSprint = powerUpManager != null && powerUpManager.HasInfiniteSprint;
 
-        if (sprintOnCooldown && !hasInfiniteSprint) // Solo aplicar cooldown si no tiene sprint infinito
+        if (sprintOnCooldown && !hasInfiniteSprint) 
         {
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0f)
@@ -93,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         float currentSpeed = moveSpeed;
 
-        // === MODIFICACIÓN: Speed boost ===
+
         if (powerUpManager != null && powerUpManager.IsSpeedBoostActive)
         {
             currentSpeed *= speedBoostMultiplier;
@@ -104,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             IsSprinting = true;
             currentSpeed *= sprintMultiplier;
 
-            if (!hasInfiniteSprint) // Solo consumir stamina si no tiene sprint infinito
+            if (!hasInfiniteSprint) 
             {
                 sprintTimer += Time.deltaTime;
 
@@ -137,7 +133,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentJumpHeight = jumpHeight;
 
-        // === MODIFICACIÓN: Super salto ===
         if (powerUpManager != null && powerUpManager.HasSuperJump)
         {
             currentJumpHeight *= jumpBoostMultiplier;
@@ -146,6 +141,4 @@ public class PlayerMovement : MonoBehaviour
         velocity.y = Mathf.Sqrt(currentJumpHeight * -2f * gravity);
         
     }
-    
-    
 }

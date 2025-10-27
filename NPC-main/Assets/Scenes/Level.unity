@@ -1251,6 +1251,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 2016187232}
   healthSlider: {fileID: 193369160}
+--- !u!20 &199039416 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2323833466245970087, guid: d6aa707e315b5a946bd8cf95064b2868, type: 3}
+  m_PrefabInstance: {fileID: 5819984037594853481}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &199433390
 GameObject:
   m_ObjectHideFlags: 0
@@ -12478,6 +12483,25 @@ MonoBehaviour:
   playerController: {fileID: 2016187242}
   showDebugUI: 1
   showInConsole: 0
+--- !u!114 &2016187248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294381225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a6febc5e30bfd40b29d3b128c953db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  primaryWeapon: {fileID: 0}
+  specialWeapon: {fileID: 0}
+  initialPistolData: {fileID: 11400000, guid: 871913a315b3bce499a11558b04433df, type: 2}
+  primaryKey: 49
+  specialKey: 50
+  weaponHolder: {fileID: 0}
+  playerCamera: {fileID: 199039416}
 --- !u!1 &2028549247
 GameObject:
   m_ObjectHideFlags: 0
@@ -13800,6 +13824,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3855786995350690001, guid: d6aa707e315b5a946bd8cf95064b2868, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2016187247}
+    - targetCorrespondingSourceObject: {fileID: 3855786995350690001, guid: d6aa707e315b5a946bd8cf95064b2868, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2016187248}
   m_SourcePrefab: {fileID: 100100000, guid: d6aa707e315b5a946bd8cf95064b2868, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

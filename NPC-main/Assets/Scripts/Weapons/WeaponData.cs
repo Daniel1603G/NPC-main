@@ -1,6 +1,9 @@
 using UnityEngine;
 
-
+/// <summary>
+/// ScriptableObject que contiene los datos configurables de cada arma.
+/// Permite crear diferentes configuraciones sin tocar código.
+/// </summary>
 [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Weapons/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
@@ -67,6 +70,17 @@ public class WeaponData : ScriptableObject
     
     [Tooltip("Sonido al recargar/agotar munición")]
     public AudioClip emptySound;
+    
+    [Header("Bullet Tracer (Visual de Bala)")]
+    [Tooltip("¿Mostrar línea visual de la bala?")]
+    public bool showBulletTracer = true;
+    
+    [Tooltip("Color de la bala")]
+    public Color bulletColor = Color.yellow;
+    
+    [Tooltip("Grosor de la línea de bala")]
+    [Range(0.01f, 0.2f)]
+    public float bulletWidth = 0.05f;
     
     [Header("UI")]
     [Tooltip("Icono del arma para la UI")]

@@ -196,7 +196,16 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     protected virtual void ApplyDamage(GameObject target, float damage)
     {
-        // Intentar aplicar daño al PlayerHealth
+        // Intentar aplicar daño a enemigos
+        var enemyHealth = target.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.TakeDamage(damage);
+            Debug.Log($"Daño aplicado a enemigo: {damage}");
+            return;
+        }
+        
+        // Intentar aplicar daño al jugador
         var playerHealth = target.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
@@ -205,14 +214,7 @@ public abstract class Weapon : MonoBehaviour
             return;
         }
         
-        // Aquí puedes agregar más interfaces de daño
-        // Por ejemplo, si tus enemigos tienen un componente de salud
-        var enemyHealth = target.GetComponent<GuardAI>();
-        if (enemyHealth != null)
-        {
-            // Implementar daño a enemigos si lo necesitas
-            Debug.Log($"Impacto en enemigo: {target.name} - Daño: {damage}");
-        }
+        Debug.Log($"Impacto en {target.name} (sin componente de salud)");
     }
     
     /// <summary>
@@ -239,5 +241,15 @@ public abstract class Weapon : MonoBehaviour
         
         Quaternion spread = Quaternion.Euler(spreadX, spreadY, 0);
         return spread * baseDirection;
+    }
+    
+    /// <summary>
+    /// Crea un tracer visual de bala entre dos puntos.
+    /// </summary>
+    protected void CreateBulletTracer(Vector3 start, Vector3 end)
+    {
+        if (!weaponData.showBulletTracer) return;
+        
+        BulletTracer.Create(start, end, weaponData.bulletColor, weaponData.bulletWidth);
     }
 }

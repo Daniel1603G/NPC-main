@@ -1,39 +1,20 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(Rigidbody))]
-public class PowerUpPickup : MonoBehaviour
+/// <summary>
+/// Caja de power-up que el jugador puede recoger.
+/// Usa Roulette Wheel Selection para elegir power-up aleatorio.
+/// Ahora hereda de BasePickup para reutilizar código común.
+/// </summary>
+public class PowerUpPickup : BasePickup
 {
-    [Header("Power-Up Settings")]
+    [Header("Power-Up Pool")]
+    [Tooltip("Lista de power-ups disponibles con sus pesos")]
     [SerializeField] private List<PowerUpEffect> availableEffects = new List<PowerUpEffect>();
-    [SerializeField] private bool respawns = false;
-    [SerializeField] private float respawnTime = 30f;
-    [SerializeField] private GameObject visualEffect;
-    [SerializeField] private AudioSource pickupSound;
     
-    [Header("Animation")]
-    [SerializeField] private float rotationSpeed = 90f;
-    [SerializeField] private float bobSpeed = 2f;
-    [SerializeField] private float bobHeight = 0.5f;
-    
-    private Vector3 startPosition;
-    private bool isCollected = false;
-    private Renderer objectRenderer;
-    
-    private void Awake()
+    protected override void Awake()
     {
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
-        
-        var rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
-        
-        startPosition = transform.position;
-        objectRenderer = GetComponentInChildren<Renderer>();
+        base.Awake(); // Llamar a la base
         
         if (availableEffects.Count == 0)
         {
@@ -41,46 +22,49 @@ public class PowerUpPickup : MonoBehaviour
         }
     }
     
-    private void Update()
-    {
-        if (!isCollected)
-        {
-            AnimatePowerUp();
-        }
-    }
-    
-    private void AnimatePowerUp()
-    {
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        
-        float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
-        transform.position = new Vector3(startPosition.x, newY, startPosition.z);
-    }
-    
+    /// <summary>
+    /// Configura efectos por defecto si no hay ninguno asignado.
+    /// </summary>
     private void SetupDefaultEffects()
     {
-        availableEffects.Add(new PowerUpEffect("Speed       ", 25f, 8f, Color.yellow, "Aumenta la velocidad de movimiento"));
+        availableEffects.Add(new PowerUpEffect("Speed", 25f, 8f, Color.yellow, "Aumenta la velocidad de movimiento"));
         availableEffects.Add(new PowerUpEffect("Invisibility", 15f, 5f, Color.cyan, "Te vuelve invisible a los enemigos"));
         availableEffects.Add(new PowerUpEffect("Infinite Sprint", 20f, 10f, Color.green, "Sprint ilimitado sin cooldown"));
         availableEffects.Add(new PowerUpEffect("Healing", 25f, 0f, Color.red, "Restaura salud completamente"));
         availableEffects.Add(new PowerUpEffect("Super Jump", 15f, 12f, Color.magenta, "Aumenta la altura de salto"));
     }
     
-    private void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// Implementación específica del pickup de power-ups.
+    /// </summary>
+    protected override bool OnPickup(Collider player)
     {
-        if (isCollected || !other.CompareTag("Player")) return;
+        var powerUpManager = player.GetComponent<PowerUpManager>();
+        if (powerUpManager == null)
+        {
+            Debug.LogWarning("El jugador no tiene PowerUpManager");
+            return false;
+        }
         
-        var powerUpManager = other.GetComponent<PowerUpManager>();
-        if (powerUpManager == null) return;
-        
+        // Seleccionar power-up usando Roulette Wheel
         PowerUpEffect selectedEffect = SelectRandomEffect();
         if (selectedEffect != null)
         {
             powerUpManager.ApplyPowerUp(selectedEffect);
-            CollectPowerUp(selectedEffect);
+            
+            // Cambiar color del renderer si existe
+            if (objectRenderer != null)
+                objectRenderer.material.color = selectedEffect.EffectColor;
+            
+            return true; // Pickup exitoso
         }
+        
+        return false; // No había efectos disponibles
     }
     
+    /// <summary>
+    /// Selecciona un power-up usando Roulette Wheel Selection.
+    /// </summary>
     private PowerUpEffect SelectRandomEffect()
     {
         if (availableEffects.Count == 0) return null;
@@ -93,7 +77,7 @@ public class PowerUpPickup : MonoBehaviour
         
         if (totalWeight <= 0f) return null;
         
-        float randomValue = UnityEngine.Random.Range(0f, totalWeight);
+        float randomValue = Random.Range(0f, totalWeight);
         float currentWeight = 0f;
         
         foreach (var effect in availableEffects)
@@ -107,43 +91,5 @@ public class PowerUpPickup : MonoBehaviour
         }
         
         return availableEffects[availableEffects.Count - 1];
-    }
-    
-    private void CollectPowerUp(PowerUpEffect effect)
-    {
-        isCollected = true;
-        
-        if (pickupSound != null)
-            pickupSound.Play();
-            
-        if (visualEffect != null)
-            Instantiate(visualEffect, transform.position, Quaternion.identity);
-        
-        if (objectRenderer != null)
-            objectRenderer.material.color = effect.EffectColor;
-        
-        if (respawns)
-        {
-            StartCoroutine(RespawnAfterDelay());
-        }
-        else
-        {
-            Destroy(gameObject, 0.1f);
-        }
-    }
-    
-    private IEnumerator RespawnAfterDelay()
-    {
-        gameObject.SetActive(false);
-        yield return new WaitForSeconds(respawnTime);
-        
-        if (gameObject != null)
-        {
-            isCollected = false;
-            gameObject.SetActive(true);
-            
-            if (objectRenderer != null)
-                objectRenderer.material.color = Color.white;
-        }
     }
 }

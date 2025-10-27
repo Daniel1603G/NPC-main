@@ -10,10 +10,14 @@ public class Pistol : Weapon
     {
         // Dirección del disparo (centro de la pantalla/cámara)
         Vector3 shootDirection = muzzlePoint != null ? muzzlePoint.forward : transform.forward;
+        Vector3 origin = muzzlePoint != null ? muzzlePoint.position : transform.position;
         
         // Disparar raycast
         if (FireRaycast(out RaycastHit hit, shootDirection))
         {
+            // Crear tracer visual de la bala
+            CreateBulletTracer(origin, hit.point);
+            
             // Crear efecto de impacto
             CreateImpactEffect(hit.point, Quaternion.LookRotation(hit.normal));
             
@@ -21,12 +25,14 @@ public class Pistol : Weapon
             ApplyDamage(hit.collider.gameObject, weaponData.damage);
             
             // Debug visual
-            Debug.DrawLine(muzzlePoint.position, hit.point, Color.yellow, 0.1f);
+            Debug.DrawLine(origin, hit.point, Color.yellow, 0.1f);
         }
         else
         {
             // Disparo al aire (no impactó nada)
-            Debug.DrawRay(muzzlePoint.position, shootDirection * weaponData.range, Color.red, 0.1f);
+            Vector3 endPoint = origin + shootDirection * weaponData.range;
+            CreateBulletTracer(origin, endPoint);
+            Debug.DrawRay(origin, shootDirection * weaponData.range, Color.red, 0.1f);
         }
     }
 }

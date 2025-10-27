@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Sniper: Arma de precisión con alto daño y largo alcance.
-/// Disparo lento, sin dispersión, máximo daño.
-/// </summary>
+
 public class Sniper : Weapon
 {
     [Header("Sniper Specific")]
@@ -17,41 +14,65 @@ public class Sniper : Weapon
         
         if (!canPenetrateTargets)
         {
-            // Disparo simple sin penetración
+            
             if (FireRaycast(out RaycastHit hit, shootDirection))
             {
+                CreateBulletTracer(origin, hit.point);
                 CreateImpactEffect(hit.point, Quaternion.LookRotation(hit.normal));
                 ApplyDamage(hit.collider.gameObject, weaponData.damage);
                 Debug.DrawLine(origin, hit.point, Color.green, 0.5f);
             }
+            else
+            {
+                Vector3 endPoint = origin + shootDirection * weaponData.range;
+                CreateBulletTracer(origin, endPoint);
+            }
         }
         else
         {
-            // Disparo con penetración (puede atravesar múltiples objetivos)
+          
             RaycastHit[] hits = Physics.RaycastAll(origin, shootDirection, weaponData.range, hitLayers);
             
             if (hits.Length > 0)
             {
-                // Ordenar por distancia
+      
                 System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
                 
                 int penetrationCount = 0;
+                Vector3 lastPoint = origin;
                 
                 foreach (RaycastHit hit in hits)
                 {
                     if (penetrationCount >= maxPenetrations)
                         break;
                     
+                
+                    CreateBulletTracer(lastPoint, hit.point);
+                    
                     CreateImpactEffect(hit.point, Quaternion.LookRotation(hit.normal));
                     
-                    // Reducir daño con cada penetración
+                 
                     float damageMultiplier = 1f - (penetrationCount * 0.3f);
                     ApplyDamage(hit.collider.gameObject, weaponData.damage * damageMultiplier);
                     
-                    Debug.DrawLine(origin, hit.point, Color.green, 0.5f);
+                    Debug.DrawLine(lastPoint, hit.point, Color.green, 0.5f);
                     
+                    lastPoint = hit.point;
                     penetrationCount++;
                 }
+                
+               
+                if (lastPoint != origin)
+                {
+                    Vector3 finalEnd = origin + shootDirection * weaponData.range;
+                    CreateBulletTracer(lastPoint, finalEnd);
+                }
+            }
+            else
+            {
+                
+                Vector3 endPoint = origin + shootDirection * weaponData.range;
+                CreateBulletTracer(origin, endPoint);
             }
         }
     }

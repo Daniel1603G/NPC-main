@@ -14,20 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Pistol
   weaponType: 0
-  damage: 10
+  damage: 35.4
   range: 100
   fireRate: 0.5
   ammoCapacity: -1
   isAutomatic: 0
   projectilesPerShot: 1
   spreadAngle: 0
-  projectilePrefab: {fileID: 3440269087911579936, guid: 6725b6f066be62f46a373221267b825e, type: 3}
+  projectilePrefab: {fileID: 6152012165266093810, guid: ec0581e8aa214204b9f01884e77f846c, type: 3}
   projectileSpeed: 20
   explosionRadius: 5
-  weaponModelPrefab: {fileID: 919132149155446097, guid: 9680ad98933bec64f988e5fdc59b98f5, type: 3}
+  weaponModelPrefab: {fileID: 4920507860935382577, guid: 5f04650d3064895489cdb8f95e907c1b, type: 3}
   muzzleFlashEffect: {fileID: 0}
   impactEffect: {fileID: 0}
   fireSound: {fileID: 0}
   emptySound: {fileID: 0}
+  showBulletTracer: 1
+  bulletColor: {r: 0, g: 0.9489832, b: 1, a: 1}
+  bulletWidth: 0.05
   weaponIcon: {fileID: 0}
   weaponColor: {r: 1, g: 1, b: 1, a: 1}

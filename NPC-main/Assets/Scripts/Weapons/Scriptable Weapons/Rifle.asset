@@ -17,17 +17,20 @@ MonoBehaviour:
   damage: 10
   range: 100
   fireRate: 0.5
-  ammoCapacity: -1
+  ammoCapacity: 30
   isAutomatic: 0
   projectilesPerShot: 1
   spreadAngle: 0
   projectilePrefab: {fileID: 6198418240949811716, guid: 4d24bf16b2c8c9a48b6f0913cc057812, type: 3}
   projectileSpeed: 20
   explosionRadius: 5
-  weaponModelPrefab: {fileID: 919132149155446097, guid: 868d3a8c1a5caaf4e81d859491abdde5, type: 3}
+  weaponModelPrefab: {fileID: 6198418240949811716, guid: 4d24bf16b2c8c9a48b6f0913cc057812, type: 3}
   muzzleFlashEffect: {fileID: 0}
   impactEffect: {fileID: 0}
   fireSound: {fileID: 0}
   emptySound: {fileID: 0}
+  showBulletTracer: 1
+  bulletColor: {r: 0.077162705, g: 0.9622642, b: 0.9447498, a: 1}
+  bulletWidth: 0.05
   weaponIcon: {fileID: 0}
   weaponColor: {r: 1, g: 1, b: 1, a: 1}

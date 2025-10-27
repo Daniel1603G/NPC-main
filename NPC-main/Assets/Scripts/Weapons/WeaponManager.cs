@@ -61,7 +61,7 @@ public class WeaponManager : MonoBehaviour
             // Crear weapon holder si no existe
             GameObject holder = new GameObject("WeaponHolder");
             holder.transform.SetParent(playerCamera != null ? playerCamera.transform : transform);
-            holder.transform.localPosition = new Vector3(0.3f, -0.3f, 0.5f);
+            holder.transform.localPosition = new Vector3(0.3f, -0.3f, 0.7f);
             holder.transform.localRotation = Quaternion.identity;
             weaponHolder = holder.transform;
             Debug.Log($"WeaponHolder creado en: {weaponHolder.position}");

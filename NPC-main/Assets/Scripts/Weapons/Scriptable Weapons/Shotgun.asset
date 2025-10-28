@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Shotgun
   weaponType: 1
-  damage: 10
+  damage: 50
   range: 100
   fireRate: 0.5
   ammoCapacity: 10
   isAutomatic: 0
   projectilesPerShot: 3
-  spreadAngle: 0
+  spreadAngle: 5.9
   projectilePrefab: {fileID: 3489922258393200078, guid: 4d409630e9aa0d74cb9e7359305b15c6, type: 3}
   projectileSpeed: 18.4
   explosionRadius: 3.69

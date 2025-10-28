@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Pistol
   weaponType: 0
-  damage: 35.4
-  range: 100
+  damage: 21
+  range: 75
   fireRate: 0.5
   ammoCapacity: -1
   isAutomatic: 0

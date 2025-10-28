@@ -17,8 +17,8 @@ MonoBehaviour:
   damage: 10
   range: 100
   fireRate: 0.5
-  ammoCapacity: 30
-  isAutomatic: 0
+  ammoCapacity: 50
+  isAutomatic: 1
   projectilesPerShot: 1
   spreadAngle: 0
   projectilePrefab: {fileID: 6198418240949811716, guid: 4d24bf16b2c8c9a48b6f0913cc057812, type: 3}

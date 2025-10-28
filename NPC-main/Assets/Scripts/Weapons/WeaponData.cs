@@ -79,8 +79,8 @@ public class WeaponData : ScriptableObject
     public Color bulletColor = Color.yellow;
     
     [Tooltip("Grosor de la línea de bala")]
-    [Range(0.01f, 0.2f)]
-    public float bulletWidth = 0.05f;
+    [Range(0.01f, 0.3f)]
+    public float bulletWidth = 0.1f; // Aumentado para mejor visibilidad
     
     [Header("UI")]
     [Tooltip("Icono del arma para la UI")]
@@ -90,10 +90,7 @@ public class WeaponData : ScriptableObject
     public Color weaponColor = Color.white;
 }
 
-/// <summary>
-/// Enumeración de tipos de armas.
-/// Facilita la identificación y permite filtros.
-/// </summary>
+
 public enum WeaponType
 {
     Pistol,

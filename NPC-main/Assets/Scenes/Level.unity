@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -765,7 +765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.028541671, y: 0.9023334}
   m_AnchorMax: {x: 0.22600001, y: 0.94600004}
-  m_AnchoredPosition: {x: -1.4998779, y: 0.8057251}
+  m_AnchoredPosition: {x: -1.5, y: 0.80566406}
   m_SizeDelta: {x: 5.579, y: 1.6114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &193369160
@@ -1659,7 +1659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000049591064}
+  m_AnchoredPosition: {x: 0, y: -0.00005340576}
   m_SizeDelta: {x: 0, y: -26.192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &442877944
@@ -3323,13 +3323,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2016187225}
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1573414031}
+      objectReference: {fileID: 476516670}
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 715881804}
+      objectReference: {fileID: 1200159209}
+    - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
+      propertyPath: patrolWaypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1387406456}
     - target: {fileID: 7270228380370112094, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.33
@@ -4102,13 +4110,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2016187225}
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1573414031}
+      objectReference: {fileID: 473669913}
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 715881804}
+      objectReference: {fileID: 1789885351}
+    - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
+      propertyPath: patrolWaypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 546853565}
     - target: {fileID: 7270228380370112094, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34.170002
@@ -5439,11 +5455,11 @@ PrefabInstance:
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1119621609}
+      objectReference: {fileID: 1001759932}
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1881986752}
+      objectReference: {fileID: 561645680}
     - target: {fileID: 7343747561061206142, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -59.089996
@@ -6088,7 +6104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.31069946, y: 0}
+  m_AnchoredPosition: {x: 0.31072998, y: 0}
   m_SizeDelta: {x: 47.7105, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1542339596
@@ -6295,7 +6311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.023854172, y: 0.067}
   m_AnchorMax: {x: 0.22600001, y: 0.11048148}
-  m_AnchoredPosition: {x: 3.000122, y: -0.80566406}
+  m_AnchoredPosition: {x: 3, y: -0.80566406}
   m_SizeDelta: {x: -3.4209976, y: 1.6113892}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1588042414
@@ -6509,11 +6525,11 @@ PrefabInstance:
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1573414031}
+      objectReference: {fileID: 1472796512}
     - target: {fileID: 6472988603434008336, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 715881804}
+      objectReference: {fileID: 2053433922}
     - target: {fileID: 7270228380370112094, guid: 6269c794f3fd9bc4383c8117cf41e015, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.550001
@@ -7034,11 +7050,11 @@ PrefabInstance:
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1119621609}
+      objectReference: {fileID: 1613515016}
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1881986752}
+      objectReference: {fileID: 609881904}
     - target: {fileID: 7343747561061206142, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.29
@@ -7226,7 +7242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.31069946, y: -1.3729}
+  m_AnchoredPosition: {x: 0.31072998, y: -1.3729019}
   m_SizeDelta: {x: 47.7105, y: 6.178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1932797326
@@ -7356,11 +7372,11 @@ PrefabInstance:
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1119621609}
+      objectReference: {fileID: 1542339597}
     - target: {fileID: 1091484365359613018, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: patrolWaypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1881986752}
+      objectReference: {fileID: 1094216376}
     - target: {fileID: 7343747561061206142, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.069998
@@ -7403,7 +7419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8764665915355838607, guid: fcf5acfa2031846449ee135006bd7cc7, type: 3}
       propertyPath: m_Name
-      value: AI 6
+      value: AI 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

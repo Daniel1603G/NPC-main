@@ -16,6 +16,10 @@ public class GuardAI : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     private float yVel;
     private bool isGrounded;
+    
+    [Header("Combat Settings")]
+    [SerializeField] private EnemyWeapon enemyWeapon;
+    [SerializeField] private float shootingDistance = 15f; 
 
     [Header("Patrol Settings")]
     [SerializeField] private Transform[] patrolWaypoints;
@@ -41,11 +45,13 @@ public class GuardAI : MonoBehaviour
 
     private CharacterController controller;
     private IState currentState;
+    private AlertState alertState;
 
     private IdleState idleState;
     private PatrolState patrolState;
     private ChaseState chaseState;
     private AttackState attackState;
+    private ShootingState shootingState;
 
     private ITreeNode _rootNode;
 
@@ -53,6 +59,11 @@ public class GuardAI : MonoBehaviour
     public PatrolState PatrolStateInstance => patrolState;
     public ChaseState ChaseStateInstance => chaseState;
     public AttackState AttackStateInstance => attackState;
+    
+    public AlertState AlertStateInstance => alertState;
+    
+    public ShootingState ShootingStateInstance => shootingState;
+    public EnemyWeapon Weapon => enemyWeapon;
 
     [SerializeField] private LineOfSight lineOfSight;
 
@@ -62,6 +73,9 @@ public class GuardAI : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
+    
+    [Header("Alert System")]
+    [SerializeField] private EnemyHealth enemyHealth;
 
     private static readonly int SpeedParam = Animator.StringToHash("Speed");
     private static readonly int IsAttackingParam = Animator.StringToHash("IsAttack");
@@ -97,6 +111,25 @@ public class GuardAI : MonoBehaviour
 
         patrolIndex = 0;
 
+        
+        if (enemyWeapon == null)
+            enemyWeapon = GetComponentInChildren<EnemyWeapon>();
+    
+        if (enemyWeapon != null)
+        {
+            shootingState = new ShootingState(this, enemyWeapon);
+            Debug.Log($"{gameObject.name}: ShootingState inicializado");
+        }
+        
+        if (enemyHealth == null)
+            enemyHealth = GetComponent<EnemyHealth>();
+    
+        if (enemyHealth != null)
+        {
+            enemyHealth.OnDamagedFrom += OnReceivedDamage;
+        }
+
+        alertState = new AlertState(this);
         idleState = new IdleState(this);
         patrolState = new PatrolState(this);
         chaseState = new ChaseState(this);
@@ -116,6 +149,7 @@ public class GuardAI : MonoBehaviour
         UpdateAnimator(); // <-- SOLO ESTO NUEVO
     }
 
+    
 
     private void UpdateAnimator()
     {
@@ -127,14 +161,14 @@ public class GuardAI : MonoBehaviour
 
         float currentSpeed = displacement.magnitude / Time.deltaTime;
 
-        // Actualizamos el parámetro del Animator
+        // Actualizamos el parï¿½metro del Animator
         animator.SetFloat(SpeedParam, currentSpeed);
 
-        // ¿Está atacando?
+        // ï¿½Estï¿½ atacando?
         bool isAttacking = (currentState == attackState);
         animator.SetBool(IsAttackingParam, isAttacking);
 
-        // Actualizamos la posición anterior para el próximo frame
+        // Actualizamos la posiciï¿½n anterior para el prï¿½ximo frame
         lastPosition = transform.position;
     }
 
@@ -220,4 +254,48 @@ public class GuardAI : MonoBehaviour
         return nextPoint;
     }
     public void ResetPatrol() => patrolIndex = 0;
+    
+    public bool ShouldShoot()
+    {
+        if (enemyWeapon == null || Player == null)
+            return false;
+    
+        float distance = Vector3.Distance(transform.position, Player.position);
+    
+   
+        return distance >= attackRange && distance <= shootingDistance && IsPlayerInDetectionRange();
+    }
+    
+    private void OnReceivedDamage(Vector3 damageDirection)
+    {
+        Debug.Log($"{gameObject.name}: Â¡RecibÃ­ daÃ±o desde {damageDirection}!");
+    
+
+        if (currentState != attackState && currentState != shootingState)
+        {
+           
+            if (alertState != null)
+            {
+                alertState.SetThreatDirection(damageDirection);
+                ChangeState(alertState);
+            }
+        }
+        else
+        {
+           
+            Vector3 targetDir = damageDirection;
+            targetDir.y = 0f;
+            if (targetDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(targetDir);
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        if (enemyHealth != null)
+        {
+            enemyHealth.OnDamagedFrom -= OnReceivedDamage;
+        }
+    }
 }

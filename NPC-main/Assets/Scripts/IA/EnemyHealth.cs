@@ -1,10 +1,6 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Sistema de salud para enemigos.
-/// Permite que reciban daño de las armas del jugador.
-/// </summary>
 public class EnemyHealth : MonoBehaviour
 {
     [Header("Health Settings")]
@@ -18,8 +14,11 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     
     [Header("Drops")]
-    [SerializeField] private GameObject[] dropPrefabs; // Items que suelta al morir
+    [SerializeField] private GameObject[] dropPrefabs; 
     [SerializeField] private float dropChance = 0.3f;
+    
+    [Header("Alert System")]
+    [SerializeField] private bool enableAlertOnDamage = true;
     
     private AudioSource audioSource;
     private Renderer[] renderers;
@@ -27,8 +26,10 @@ public class EnemyHealth : MonoBehaviour
     private bool isDead = false;
     
     // Eventos
-    public event Action<float> OnHealthChanged; // Normalizado 0-1
+    public event Action<float> OnHealthChanged; 
     public event Action OnDeath;
+    
+    public event Action<Vector3> OnDamagedFrom; 
     
     // Properties
     public float CurrentHealth => currentHealth;
@@ -48,37 +49,47 @@ public class EnemyHealth : MonoBehaviour
         
         currentHealth = maxHealth;
     }
-    
-    /// <summary>
-    /// Aplica daño al enemigo.
-    /// </summary>
-    public void TakeDamage(float damage)
+
+    public void TakeDamage(float damage, Vector3 damageOrigin = default)
     {
         if (isDead || damage <= 0f) return;
-        
+    
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0f);
-        
-        // Disparar evento
+    
+   
         OnHealthChanged?.Invoke(HealthPercent);
-        
-        // Feedback visual
+    
+
+        if (enableAlertOnDamage && damageOrigin != Vector3.zero)
+        {
+            Vector3 damageDirection = damageOrigin - transform.position;
+            OnDamagedFrom?.Invoke(damageDirection.normalized);
+        }
+    
+    
         StartCoroutine(FlashRed());
-        
-        // Sonido de daño
+    
+  
         if (hurtSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(hurtSound);
         }
-        
+    
         Debug.Log($"{gameObject.name} recibió {damage} de daño. Salud: {currentHealth}/{maxHealth}");
-        
-        // Verificar muerte
+    
+      
         if (currentHealth <= 0f)
         {
             Die();
         }
     }
+    
+    public void TakeDamage(float damage)
+    {
+        TakeDamage(damage, Vector3.zero);
+    }
+
     
     /// <summary>
     /// Mata al enemigo.
@@ -91,61 +102,56 @@ public class EnemyHealth : MonoBehaviour
         
         Debug.Log($"{gameObject.name} ha muerto!");
         
-        // Disparar evento
+
         OnDeath?.Invoke();
         
-        // Efecto de muerte
+   
         if (deathEffect != null)
         {
             Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
         
-        // Sonido de muerte
+
         if (deathSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(deathSound);
         }
         
-        // Drop items
+      
         SpawnDrops();
         
-        // Desactivar AI
+   
         DisableAI();
         
-        // Destruir después de un delay
+        
         Destroy(gameObject, 2f);
     }
     
-    /// <summary>
-    /// Desactiva los componentes de IA.
-    /// </summary>
+
     private void DisableAI()
     {
-        // Desactivar GuardAI
+ 
         var guardAI = GetComponent<GuardAI>();
         if (guardAI != null)
         {
             guardAI.enabled = false;
         }
         
-        // Desactivar RunnerAI
+    
         var runnerAI = GetComponent<RunnerAI>();
         if (runnerAI != null)
         {
             runnerAI.enabled = false;
         }
         
-        // Desactivar CharacterController
+      
         var controller = GetComponent<CharacterController>();
         if (controller != null)
         {
             controller.enabled = false;
         }
     }
-    
-    /// <summary>
-    /// Spawnea items al morir.
-    /// </summary>
+
     private void SpawnDrops()
     {
         if (dropPrefabs == null || dropPrefabs.Length == 0) return;
@@ -195,7 +201,7 @@ public class EnemyHealth : MonoBehaviour
         OnHealthChanged?.Invoke(HealthPercent);
     }
     
-    // Debug
+
     private void OnDrawGizmosSelected()
     {
         if (isDead)

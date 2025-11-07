@@ -30,6 +30,12 @@ public class ChaseState : IState
             ai.ChangeState(ai.PatrolStateInstance);
             return;
         }
+        
+        if (ai.ShootingStateInstance != null && ai.ShouldShoot())
+        {
+            ai.ChangeState(ai.ShootingStateInstance);
+            return;
+        }
 
         if (ai.IsPlayerInAttackRange())
         {

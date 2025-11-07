@@ -196,15 +196,17 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     protected virtual void ApplyDamage(GameObject target, float damage)
     {
-        // Intentar aplicar daño a enemigos
+        // Intentar aplicar daño a enemigos CON origen del daño
         var enemyHealth = target.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            enemyHealth.TakeDamage(damage);
+            // Pasar la posición del jugador como origen del daño
+            Vector3 playerPosition = muzzlePoint != null ? muzzlePoint.position : transform.position;
+            enemyHealth.TakeDamage(damage, playerPosition);
             Debug.Log($"Daño aplicado a enemigo: {damage}");
             return;
         }
-        
+    
         // Intentar aplicar daño al jugador
         var playerHealth = target.GetComponent<PlayerHealth>();
         if (playerHealth != null)
@@ -213,14 +215,11 @@ public abstract class Weapon : MonoBehaviour
             Debug.Log($"Daño aplicado a jugador: {damage}");
             return;
         }
-        
+    
         Debug.Log($"Impacto en {target.name} (sin componente de salud)");
     }
     
-    /// <summary>
-    /// Dispara un raycast desde el muzzle point.
-    /// Helper method para armas basadas en raycast.
-    /// </summary>
+  
     protected bool FireRaycast(out RaycastHit hit, Vector3 direction)
     {
         Vector3 origin = muzzlePoint != null ? muzzlePoint.position : transform.position;

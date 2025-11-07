@@ -60,6 +60,15 @@ public class GuardAI : MonoBehaviour
     private int patrolIndex;
     private float lastSawPlayerTime;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    private static readonly int SpeedParam = Animator.StringToHash("Speed");
+    private static readonly int IsAttackingParam = Animator.StringToHash("IsAttack");
+
+    private Vector3 lastPosition;
+
+
     public Transform Player => player;
     public float AttackRange => attackRange;
     public float IdleDuration => idleDuration;
@@ -70,11 +79,16 @@ public class GuardAI : MonoBehaviour
 
     private void Awake()
     {
+        lastPosition = transform.position;
+
         lastSawPlayerTime = -Mathf.Infinity;
         controller = GetComponent<CharacterController>();
 
         if (lineOfSight == null)
             lineOfSight = GetComponent<LineOfSight>();
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>(); // <-- toma el del soldado
 
         if (patrolWaypoints != null && patrolWaypoints.Length > 0)
             patrolPoints = (Transform[])patrolWaypoints.Clone();
@@ -99,7 +113,31 @@ public class GuardAI : MonoBehaviour
         yVel += gravity * Time.deltaTime;
         currentState?.Execute();
 
+        UpdateAnimator(); // <-- SOLO ESTO NUEVO
     }
+
+
+    private void UpdateAnimator()
+    {
+        if (animator == null) return;
+
+        // Calculamos la velocidad real del guardia (sin depender del CharacterController)
+        Vector3 displacement = transform.position - lastPosition;
+        displacement.y = 0f;
+
+        float currentSpeed = displacement.magnitude / Time.deltaTime;
+
+        // Actualizamos el parámetro del Animator
+        animator.SetFloat(SpeedParam, currentSpeed);
+
+        // ¿Está atacando?
+        bool isAttacking = (currentState == attackState);
+        animator.SetBool(IsAttackingParam, isAttacking);
+
+        // Actualizamos la posición anterior para el próximo frame
+        lastPosition = transform.position;
+    }
+
 
     public void ChangeState(IState newState)
     {

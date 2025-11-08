@@ -455,6 +455,8 @@ MonoBehaviour:
   dropPrefabs: []
   dropChance: 0.3
   enableAlertOnDamage: 1
+  enableFleeAtLowHealth: 1
+  fleeHealthThreshold: 0.3
 --- !u!114 &6987210651594675688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,12 +469,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe32189c606c174d9a1ad9ad96435c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 7
+  detectionRange: 12.05
   fieldOfViewAngle: 90
   viewHeight: 2
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
+  enableDynamicVision: 1
+  rangeVariation: 0.208
+  fovVariation: 15
+  variationInterval: 3
 --- !u!95 &6957429236618760912 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}

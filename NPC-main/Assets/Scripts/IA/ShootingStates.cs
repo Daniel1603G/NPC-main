@@ -66,10 +66,10 @@ public class ShootingState : IState
         AimAtPlayer();
         
     
-        // if (weapon != null && weapon.CanFire)
-        // {
-        //     weapon.TryShoot(ai.Player);
-        // }
+         if (weapon != null && weapon.CanFire)
+         {
+             weapon.TryShoot(ai.Player);
+         }
     }
     
     public void Exit()

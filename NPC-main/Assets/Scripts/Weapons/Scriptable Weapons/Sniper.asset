@@ -29,5 +29,8 @@ MonoBehaviour:
   impactEffect: {fileID: 0}
   fireSound: {fileID: 0}
   emptySound: {fileID: 0}
+  showBulletTracer: 1
+  bulletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  bulletWidth: 0.1
   weaponIcon: {fileID: 0}
   weaponColor: {r: 1, g: 1, b: 1, a: 1}

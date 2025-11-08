@@ -25,14 +25,14 @@ public class Pistol : Weapon
             ApplyDamage(hit.collider.gameObject, weaponData.damage);
             
             // Debug visual
-            Debug.DrawLine(origin, hit.point, Color.yellow, 0.1f);
+            //Debug.DrawLine(origin, hit.point, Color.yellow, 0.1f);
         }
         else
         {
             // Disparo al aire (no impactó nada)
             Vector3 endPoint = origin + shootDirection * weaponData.range;
             CreateBulletTracer(origin, endPoint);
-            Debug.DrawRay(origin, shootDirection * weaponData.range, Color.red, 0.1f);
+          //  Debug.DrawRay(origin, shootDirection * weaponData.range, Color.red, 0.1f);
         }
     }
 }

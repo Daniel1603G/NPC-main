@@ -1,12 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Estado Chase: El drone persigue al jugador mientras mantiene flocking.
+/// Chase: Flocking + perseguir jugador a velocidad media.
 /// </summary>
 public class ChaseDroneState : IState
 {
     private readonly DroneAI ai;
-    private readonly float chaseForceMultiplier = 3f;
     
     public ChaseDroneState(DroneAI ai)
     {
@@ -15,35 +14,44 @@ public class ChaseDroneState : IState
     
     public void Enter()
     {
-        Debug.Log($"{ai.name}: ¡Objetivo detectado! Persiguiendo...");
-        ai.PlayAlertSound();
+        Debug.Log($"{ai.name}: Persiguiendo jugador");
+        ai.SetChaseMode();
+        
+        // Velocidad media
+        if (ai.Boid != null)
+        {
+            ai.Boid.SetMaxSpeed(ai.ChaseSpeed);
+        }
     }
     
     public void Execute()
     {
-        // Si pierde de vista al jugador → Patrol
+        // Perdió de vista al jugador
         if (!ai.CanSeePlayer())
         {
             ai.ChangeState(ai.PatrolStateInstance);
             return;
         }
         
-        // Si está lo suficientemente cerca → Kamikaze
-        if (ai.IsInKamikazeRange())
+        // Está lo suficientemente cerca para atacar
+        if (ai.IsInAttackRange())
         {
-            ai.ChangeState(ai.KamikazeStateInstance);
+            ai.ChangeState(ai.AttackStateInstance);
             return;
         }
         
-        // Agregar fuerza de persecución al jugador
+        // Perseguir
         if (ai.Player != null && ai.Boid != null)
         {
-            Vector3 toPlayer = ai.Boid.Seek(ai.Player.position);
-            ai.Boid.AddForce(toPlayer * chaseForceMultiplier);
+            ai.Boid.SetTarget(ai.Player.position);
         }
     }
     
     public void Exit()
     {
+        if (ai.Boid != null)
+        {
+            ai.Boid.ClearTarget();
+        }
     }
 }

@@ -226,10 +226,7 @@ public abstract class Weapon : MonoBehaviour
         return Physics.Raycast(origin, direction, out hit, weaponData.range, hitLayers);
     }
     
-    /// <summary>
-    /// Obtiene una dirección con dispersión aplicada.
-    /// Útil para shotguns y armas con spread.
-    /// </summary>
+
     protected Vector3 GetSpreadDirection(Vector3 baseDirection)
     {
         if (weaponData.spreadAngle <= 0)

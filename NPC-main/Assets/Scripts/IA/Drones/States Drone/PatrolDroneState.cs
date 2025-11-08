@@ -1,8 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Estado Patrol: El drone patrulla usando flocking.
-/// Vuela en formación con otros drones buscando amenazas.
+/// Patrol: Flocking + deambular por área.
 /// </summary>
 public class PatrolDroneState : IState
 {
@@ -15,23 +14,37 @@ public class PatrolDroneState : IState
     
     public void Enter()
     {
-        Debug.Log($"{ai.name}: Patrullando");
+        Debug.Log($"{ai.name}: Patrullando área");
+        ai.SetPatrolMode();
+        
+        // Velocidad lenta
+        if (ai.Boid != null)
+        {
+            ai.Boid.SetMaxSpeed(ai.PatrolSpeed);
+        }
     }
     
     public void Execute()
     {
-        // Si detecta al jugador → Chase
+        // Detectar jugador
         if (ai.CanSeePlayer())
         {
             ai.ChangeState(ai.ChaseStateInstance);
             return;
         }
         
-        // El flocking se maneja automáticamente en Boid3D
-        // Aquí solo verificamos transiciones
+        // Establecer objetivo aleatorio
+        if (ai.Boid != null)
+        {
+            ai.Boid.SetTarget(ai.GetCurrentPatrolTarget());
+        }
     }
     
     public void Exit()
     {
+        if (ai.Boid != null)
+        {
+            ai.Boid.ClearTarget();
+        }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45505238, g: 0.54310805, b: 0.6851499, a: 1}
+  m_IndirectSpecularColor: {r: 0.4549535, g: 0.5431098, b: 0.68513256, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6737,6 +6737,8 @@ MonoBehaviour:
   dropPrefabs: []
   dropChance: 0.3
   enableAlertOnDamage: 1
+  enableFleeAtLowHealth: 1
+  fleeHealthThreshold: 0.3
 --- !u!1001 &532507665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28535,7 +28537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009c8b0675d01fd4cb23eec011dfd912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dronePrefab: {fileID: 5636281550980964243, guid: 2e26503e9f352ad4cb8338fbf6147419, type: 3}
+  dronePrefab: {fileID: 7279201908094555866, guid: 2900b97b1fd2dc544aa9b5ca42d8fff4, type: 3}
   droneCount: 5
   spawnCenter: {x: 128.4041, y: 6.91, z: -31.67676}
   spawnRadius: 12

@@ -2,24 +2,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Versión 3D del Boid que permite movimiento vertical.
-/// Usado para drones que vuelan.
-/// MEJORADO: Ahora con movimiento ondulante orgánico.
+/// Boid 3D con flocking constante y movimiento natural.
+/// SIN rotaciones raras, SOLO movimiento suave.
 /// </summary>
-public class Boid3D : SteeringEntity
+public class Boid3D : MonoBehaviour
 {
+    [Header("Movement Settings")]
+    [SerializeField] protected float maxSpeed = 5f;
+    [SerializeField] protected float maxForce = 8f;
+    [SerializeField] protected float rotationSmoothTime = 0.3f; // Suavizado de rotación
+    
     [Header("3D Flight Settings")]
-    [SerializeField] private float minFlightHeight = 3f;
-    [SerializeField] private float maxFlightHeight = 10f;
-    [SerializeField] private float heightCorrectionForce = 2f;
+    [SerializeField]public float minFlightHeight = 3f;
+    [SerializeField] public float maxFlightHeight = 10f;
+    [SerializeField] private float heightCorrectionForce = 1.5f;
     
-    [Header("Organic Movement")]
-    [SerializeField] private bool enableWavyMovement = true;
-    [SerializeField] private float waveFrequency = 2f;
-    [SerializeField] private float waveAmplitude = 0.5f;
-    [SerializeField] private float waveOffset;
+    [Header("Visual Movement")]
+    [SerializeField] private bool enableSubtleBob = true;
+    [SerializeField] private float bobFrequency = 1.5f;
+    [SerializeField] private float bobAmplitude = 0.2f;
     
-    // ✅ CORRECCIÓN 1: Cambiar tipo de List<Boid3D> a List<IFlockingBevaviour>
+    protected Vector3 velocity;
+    private Vector3 targetPosition;
+    private bool hasTarget = false;
+    private float bobOffset;
+    private Vector3 rotationVelocity;
+    
     private List<IFlockingBevaviour> flockingBehabiours = new List<IFlockingBevaviour>();
     
     public Vector3 Velocity => velocity;
@@ -33,75 +41,101 @@ public class Boid3D : SteeringEntity
             FlockingManager3D.Instance.AddBoid(this);
         }
         
-        waveOffset = Random.Range(0f, Mathf.PI * 2f);
+        // Offset único para movimiento ondulante
+        bobOffset = Random.Range(0f, Mathf.PI * 2f);
         
+        // Velocidad inicial aleatoria suave
         Vector3 randomDir = new Vector3(
             Random.Range(-1f, 1f),
-            Random.Range(-0.3f, 0.3f),
+            0f,
             Random.Range(-1f, 1f)
         ).normalized;
         
-        AddForce(randomDir * maxSpeed);
+        velocity = randomDir * (maxSpeed * 0.5f);
         
         flockingBehabiours.AddRange(GetComponents<IFlockingBevaviour>());
     }
     
     void Update()
     {
-        if (BoidsInRange())
-            Flocking();
+        // === FLOCKING SIEMPRE ACTIVO ===
+        Vector3 flockingForce = Flocking();
         
-        if (enableWavyMovement)
-            ApplyWavyMovement();
+        // Agregar objetivo si existe (patrol o chase)
+        if (hasTarget)
+        {
+            Vector3 seekForce = Seek(targetPosition);
+            flockingForce += seekForce * 0.4f; // 40% peso del objetivo
+        }
         
+        AddForce(flockingForce);
+        
+        // Mantener altura
         MaintainFlightHeight();
         
+        // Movimiento ondulante sutil
+        if (enableSubtleBob)
+            ApplySubtleBob();
+        
+        // Moverse
         Move();
     }
     
-    private void ApplyWavyMovement()
+    /// <summary>
+    /// Establece un objetivo para el boid.
+    /// </summary>
+    public void SetTarget(Vector3 target)
     {
-        float lateralWave = Mathf.Sin((Time.time + waveOffset) * waveFrequency) * waveAmplitude;
-        Vector3 lateralForce = transform.right * lateralWave;
-        
-        float verticalWave = Mathf.Cos((Time.time + waveOffset) * waveFrequency * 0.5f) * waveAmplitude * 0.3f;
-        Vector3 verticalForce = Vector3.up * verticalWave;
-        
-        float rollWave = Mathf.Sin((Time.time + waveOffset) * waveFrequency * 1.5f) * 15f;
-        transform.Rotate(Vector3.forward, rollWave * Time.deltaTime);
-        
-        AddForce(lateralForce + verticalForce);
+        targetPosition = target;
+        hasTarget = true;
     }
     
-    private bool BoidsInRange()
+    /// <summary>
+    /// Limpia el objetivo.
+    /// </summary>
+    public void ClearTarget()
     {
-        if (FM == null) return false;
+        hasTarget = false;
+    }
+    
+    /// <summary>
+    /// Ajusta la velocidad máxima dinámicamente.
+    /// </summary>
+    public void SetMaxSpeed(float speed)
+    {
+        maxSpeed = speed;
+    }
+    
+    /// <summary>
+    /// Movimiento ondulante MUY sutil (no mareante).
+    /// </summary>
+    private void ApplySubtleBob()
+    {
+        float bob = Mathf.Sin((Time.time + bobOffset) * bobFrequency) * bobAmplitude;
+        Vector3 bobForce = Vector3.up * bob;
+        AddForce(bobForce);
+    }
+    
+    private Vector3 Flocking()
+    {
+        Vector3 flockingForce = Vector3.zero;
         
-        for (int i = 0; i < AllBoids.Count; i++)
+        // Solo aplicar flocking si hay otros boids cerca
+        if (AllBoids.Count > 1)
         {
-            var boid = AllBoids[i];
-            if (boid == this) continue;
-            
-            float sqrDistance = (transform.position - boid.transform.position).sqrMagnitude;
-            if (sqrDistance <= FM.cohesionRadius * FM.cohesionRadius)
-                return true;
+            flockingForce = 
+                Separation() * FM.separationWeight +
+                Cohesion() * FM.cohesionWeight +
+                Alignment() * FM.alignmentWeight;
         }
-        return false;
-    }
-    
-    private void Flocking()
-    {
-        Vector3 flockingForce = 
-            Separation() * FM.separationWeight +
-            Cohesion() * FM.cohesionWeight +
-            Alignment() * FM.alignmentWeight;
         
-        AddForce(flockingForce);
+        return flockingForce;
     }
     
     private Vector3 Separation()
     {
         Vector3 totalDir = Vector3.zero;
+        int count = 0;
         
         for (int i = 0; i < AllBoids.Count; i++)
         {
@@ -111,12 +145,17 @@ public class Boid3D : SteeringEntity
             Vector3 dir = transform.position - boid.transform.position;
             float magnitude = dir.magnitude;
             
-            if (magnitude > FM.separationRadius) continue;
+            if (magnitude > FM.separationRadius || magnitude < 0.01f) continue;
             
+            // Inversamente proporcional a la distancia
             dir = (dir / magnitude) * (1f / magnitude);
             totalDir += dir;
+            count++;
         }
         
+        if (count == 0) return Vector3.zero;
+        
+        totalDir /= count;
         return Steer(totalDir.normalized * maxSpeed);
     }
     
@@ -182,25 +221,73 @@ public class Boid3D : SteeringEntity
         }
     }
     
-    // ✅ CORRECCIÓN 2: Agregar "Dis" al inicio del método
-    public void DisableWavyMovement()
+    // === STEERING METHODS ===
+    
+    public Vector3 Seek(Vector3 position)
     {
-        enableWavyMovement = false;
+        Vector3 desired = position - transform.position;
+        desired.y *= 0.5f; // Reducir movimiento vertical brusco
+        return Steer(desired.normalized * maxSpeed);
     }
     
-    public void EnableWavyMovement()
+    public Vector3 Steer(Vector3 desired)
     {
-        enableWavyMovement = true;
+        Vector3 steering = desired - velocity;
+        return Vector3.ClampMagnitude(steering, maxForce * Time.deltaTime);
+    }
+    
+    public void AddForce(Vector3 force)
+    {
+        velocity = Vector3.ClampMagnitude(velocity + force, maxSpeed);
+    }
+    
+    /// <summary>
+    /// Movimiento y rotación SUAVE sin giros raros.
+    /// </summary>
+    public void Move()
+    {
+        if (velocity.sqrMagnitude < 0.01f) return;
+        
+        // Movimiento
+        transform.position += velocity * Time.deltaTime;
+        
+        // Rotación SUAVE solo en el plano horizontal
+        Vector3 horizontalVelocity = new Vector3(velocity.x, 0f, velocity.z);
+        
+        if (horizontalVelocity.sqrMagnitude > 0.1f)
+        {
+            // Usar SmoothDamp para rotación ultra suave
+            Quaternion targetRotation = Quaternion.LookRotation(horizontalVelocity, Vector3.up);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                Time.deltaTime / rotationSmoothTime
+            );
+        }
     }
     
     private void OnDrawGizmosSelected()
     {
         if (FM == null) return;
         
-        Gizmos.color = Color.yellow;
+        // Cohesión
+        Gizmos.color = new Color(0f, 1f, 1f, 0.3f);
         Gizmos.DrawWireSphere(transform.position, FM.cohesionRadius);
         
-        Gizmos.color = Color.red;
+        // Separación
+        Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
         Gizmos.DrawWireSphere(transform.position, FM.separationRadius);
+        
+        // Objetivo actual
+        if (hasTarget)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, targetPosition);
+            Gizmos.DrawWireSphere(targetPosition, 0.5f);
+        }
+        
+        // Dirección de velocidad
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, velocity.normalized * 2f);
     }
 }

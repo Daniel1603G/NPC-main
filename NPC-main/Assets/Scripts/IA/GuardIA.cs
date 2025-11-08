@@ -52,6 +52,7 @@ public class GuardAI : MonoBehaviour
     private ChaseState chaseState;
     private AttackState attackState;
     private ShootingState shootingState;
+    private FleeState fleeState;
 
     private ITreeNode _rootNode;
 
@@ -59,6 +60,7 @@ public class GuardAI : MonoBehaviour
     public PatrolState PatrolStateInstance => patrolState;
     public ChaseState ChaseStateInstance => chaseState;
     public AttackState AttackStateInstance => attackState;
+    public FleeState FleeStateInstance => fleeState;
     
     public AlertState AlertStateInstance => alertState;
     
@@ -102,7 +104,7 @@ public class GuardAI : MonoBehaviour
             lineOfSight = GetComponent<LineOfSight>();
 
         if (animator == null)
-            animator = GetComponentInChildren<Animator>(); // <-- toma el del soldado
+            animator = GetComponentInChildren<Animator>(); 
 
         if (patrolWaypoints != null && patrolWaypoints.Length > 0)
             patrolPoints = (Transform[])patrolWaypoints.Clone();
@@ -129,11 +131,19 @@ public class GuardAI : MonoBehaviour
             enemyHealth.OnDamagedFrom += OnReceivedDamage;
         }
 
+        if (enemyHealth != null)
+        {
+            enemyHealth.OnDamagedFrom += OnReceivedDamage;
+        
+          
+            enemyHealth.OnLowHealth += OnLowHealth;
+        }
         alertState = new AlertState(this);
         idleState = new IdleState(this);
         patrolState = new PatrolState(this);
         chaseState = new ChaseState(this);
         attackState = new AttackState(this);
+           fleeState = new FleeState(this, enemyHealth);
     }
 
     private void Start() => ChangeState(idleState);
@@ -146,7 +156,7 @@ public class GuardAI : MonoBehaviour
         yVel += gravity * Time.deltaTime;
         currentState?.Execute();
 
-        UpdateAnimator(); // <-- SOLO ESTO NUEVO
+        UpdateAnimator(); 
     }
 
     
@@ -155,20 +165,20 @@ public class GuardAI : MonoBehaviour
     {
         if (animator == null) return;
 
-        // Calculamos la velocidad real del guardia (sin depender del CharacterController)
+      
         Vector3 displacement = transform.position - lastPosition;
         displacement.y = 0f;
 
         float currentSpeed = displacement.magnitude / Time.deltaTime;
 
-        // Actualizamos el par�metro del Animator
+    
         animator.SetFloat(SpeedParam, currentSpeed);
 
-        // �Est� atacando?
+      
         bool isAttacking = (currentState == attackState);
         animator.SetBool(IsAttackingParam, isAttacking);
 
-        // Actualizamos la posici�n anterior para el pr�ximo frame
+        
         lastPosition = transform.position;
     }
 
@@ -179,7 +189,17 @@ public class GuardAI : MonoBehaviour
         currentState = newState;
         currentState?.Enter();
     }
-
+    public IState GetCombatState()
+    {
+       
+        if (shootingState != null && enemyWeapon != null)
+        {
+            return shootingState;
+        }
+    
+      
+        return chaseState;
+    }
     public bool IsPlayerInDetectionRange()
     {
         if (player == null) return false;
@@ -217,12 +237,12 @@ public class GuardAI : MonoBehaviour
         if (finalDir.sqrMagnitude > 0.0001f)
             finalDir = finalDir.normalized;
 
-        // 🧩 --- Aplicar gravedad al movimiento ---
+     
         Vector3 move = finalDir * speed;
-        move.y = yVel; // usa el valor ya actualizado en Update()
+        move.y = yVel; 
 
         controller.Move(move * Time.deltaTime);
-        // 🧩 --------------------------------------
+   
 
         Quaternion targetRotation = Quaternion.LookRotation(finalDir, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -298,11 +318,23 @@ public class GuardAI : MonoBehaviour
             }
         }
     }
+    
+    private void OnLowHealth()
+    {
+        Debug.Log($"{gameObject.name}: ¡Salud crítica! Activando huida...");
+    
+        if (fleeState != null)
+        {
+            ChangeState(fleeState);
+        }
+    }
+
     private void OnDestroy()
     {
         if (enemyHealth != null)
         {
             enemyHealth.OnDamagedFrom -= OnReceivedDamage;
+            enemyHealth.OnLowHealth -= OnLowHealth;
         }
     }
 }

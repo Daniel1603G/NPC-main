@@ -416,10 +416,12 @@ MonoBehaviour:
   attackRange: 2
   idleDuration: 2
   gravity: -9.81
+  enemyWeapon: {fileID: 0}
+  shootingDistance: 20
   patrolWaypoints:
   - {fileID: 0}
   - {fileID: 0}
-  patrolSpeed: 2
+  patrolSpeed: 4
   arriveThreshold: 2
   chaseSpeed: 5
   lostSightDuration: 1.5
@@ -431,6 +433,7 @@ MonoBehaviour:
   avoidStrength: 2
   lineOfSight: {fileID: 6987210651594675688}
   animator: {fileID: 6957429236618760912}
+  enemyHealth: {fileID: 3957894606617445029}
 --- !u!114 &3957894606617445029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +454,7 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   dropPrefabs: []
   dropChance: 0.3
+  enableAlertOnDamage: 1
 --- !u!114 &6987210651594675688
 MonoBehaviour:
   m_ObjectHideFlags: 0

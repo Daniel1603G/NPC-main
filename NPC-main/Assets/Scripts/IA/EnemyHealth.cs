@@ -20,18 +20,24 @@ public class EnemyHealth : MonoBehaviour
     [Header("Alert System")]
     [SerializeField] private bool enableAlertOnDamage = true;
     
+    [Header("Flee Behavior")]
+    [SerializeField] private bool enableFleeAtLowHealth = true;
+    [SerializeField, Range(0f, 0.5f)] private float fleeHealthThreshold = 0.3f;
+    
     private AudioSource audioSource;
     private Renderer[] renderers;
     private Color originalColor;
     private bool isDead = false;
     
-    // Eventos
+
     public event Action<float> OnHealthChanged; 
+    
+    public event Action OnLowHealth;
     public event Action OnDeath;
     
     public event Action<Vector3> OnDamagedFrom; 
     
-    // Properties
+
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
     public float HealthPercent => currentHealth / maxHealth;
@@ -54,23 +60,31 @@ public class EnemyHealth : MonoBehaviour
     {
         if (isDead || damage <= 0f) return;
     
+        float previousHealth = currentHealth;
+    
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0f);
     
-   
         OnHealthChanged?.Invoke(HealthPercent);
     
-
+        // NUEVO: Notificar dirección del ataque
         if (enableAlertOnDamage && damageOrigin != Vector3.zero)
         {
             Vector3 damageDirection = damageOrigin - transform.position;
             OnDamagedFrom?.Invoke(damageDirection.normalized);
         }
     
+        // NUEVO: Verificar si entró en zona de salud crítica
+        if (enableFleeAtLowHealth && 
+            previousHealth / maxHealth > fleeHealthThreshold && 
+            currentHealth / maxHealth <= fleeHealthThreshold)
+        {
+            OnLowHealth?.Invoke();
+            Debug.Log($"{gameObject.name}: ¡Salud crítica! HP: {currentHealth}/{maxHealth}");
+        }
     
         StartCoroutine(FlashRed());
     
-  
         if (hurtSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(hurtSound);
@@ -78,7 +92,6 @@ public class EnemyHealth : MonoBehaviour
     
         Debug.Log($"{gameObject.name} recibió {damage} de daño. Salud: {currentHealth}/{maxHealth}");
     
-      
         if (currentHealth <= 0f)
         {
             Die();

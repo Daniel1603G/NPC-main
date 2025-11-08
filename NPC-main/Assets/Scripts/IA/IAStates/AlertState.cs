@@ -1,13 +1,23 @@
 using UnityEngine;
 
+/// <summary>
+/// Estado Alert: El enemigo fue atacado y busca al agresor.
+/// MEJORADO: Ahora se mueve mientras escanea.
+/// </summary>
 public class AlertState : IState
 {
     private readonly GuardAI ai;
     private float alertStartTime;
-    private float alertDuration = 5f; 
-    private float rotationSpeed = 120f; 
+    private float alertDuration = 5f;
+    private float rotationSpeed = 120f;
     private Vector3 lastKnownThreatDirection;
     private bool hasCheckedThreatDirection;
+    
+    // NUEVO: Movimiento durante alerta
+    private float moveSpeed = 1.5f; // Velocidad reducida mientras busca
+    private Vector3 searchDirection;
+    private float directionChangeInterval = 2f;
+    private float lastDirectionChange;
     
     public AlertState(GuardAI ai)
     {
@@ -17,18 +27,21 @@ public class AlertState : IState
     public void Enter()
     {
         alertStartTime = Time.time;
+        lastDirectionChange = Time.time;
         hasCheckedThreatDirection = false;
+        
+        // Dirección inicial de búsqueda
+        searchDirection = ai.transform.forward;
         
         Debug.Log($"{ai.name}: ¡ALERTA! Buscando amenaza...");
     }
     
     public void Execute()
     {
-        // Si detecta al jugador → Shooting
+        // Si detecta al jugador → Shooting/Chase
         if (ai.IsPlayerInDetectionRange())
         {
-            IState targetState = (IState)ai.ShootingStateInstance ?? (IState)ai.ChaseStateInstance;
-            ai.ChangeState(targetState);
+            ai.ChangeState(ai.GetCombatState());
             return;
         }
         
@@ -40,9 +53,9 @@ public class AlertState : IState
             return;
         }
         
-        // === COMPORTAMIENTO DE BÚSQUEDA ===
+        // === COMPORTAMIENTO DE BÚSQUEDA CON MOVIMIENTO ===
         
-        // Primero, mirar hacia la dirección del último ataque
+        // Primero, mirar hacia la dirección del ataque
         if (!hasCheckedThreatDirection && lastKnownThreatDirection != Vector3.zero)
         {
             Vector3 targetDirection = lastKnownThreatDirection;
@@ -50,36 +63,52 @@ public class AlertState : IState
             
             if (targetDirection != Vector3.zero)
             {
+                // Moverse hacia la dirección de la amenaza
+                ai.MoveTowards(ai.transform.position + targetDirection * 3f, moveSpeed);
+                
+                // Rotar hacia esa dirección
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
                 ai.transform.rotation = Quaternion.RotateTowards(
                     ai.transform.rotation,
                     targetRotation,
-                    rotationSpeed * 2f * Time.deltaTime // Rotación rápida inicial
+                    rotationSpeed * 2f * Time.deltaTime
                 );
                 
-                // Verificar si ya está mirando en esa dirección
                 float angleDiff = Quaternion.Angle(ai.transform.rotation, targetRotation);
                 if (angleDiff < 5f)
                 {
                     hasCheckedThreatDirection = true;
+                    lastDirectionChange = Time.time;
                 }
             }
         }
         else
         {
-            // Escaneo 360° lento
-            ai.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+            // Patrulla de búsqueda: caminar y rotar
+            
+            // Cambiar dirección periódicamente
+            if (Time.time - lastDirectionChange > directionChangeInterval)
+            {
+                // Nueva dirección aleatoria
+                float randomAngle = Random.Range(-90f, 90f);
+                searchDirection = Quaternion.Euler(0f, randomAngle, 0f) * ai.transform.forward;
+                lastDirectionChange = Time.time;
+            }
+            
+            // Moverse en la dirección de búsqueda
+            Vector3 targetPos = ai.transform.position + searchDirection * 2f;
+            ai.MoveTowards(targetPos, moveSpeed);
+            
+            // Escaneo rotacional mientras camina
+            ai.transform.Rotate(Vector3.up, rotationSpeed * 0.5f * Time.deltaTime);
         }
     }
     
     public void Exit()
     {
-      //  Debug.Log($"{ai.name}: Saliendo de alerta`);
+        Debug.Log($"{ai.name}: Saliendo de alerta");
     }
     
-    /// <summary>
-    /// Establece la dirección desde donde vino el ataque.
-    /// </summary>
     public void SetThreatDirection(Vector3 direction)
     {
         lastKnownThreatDirection = direction;

@@ -8,6 +8,7 @@ public class RunnerAI : MonoBehaviour
     [SerializeField] private Transform player;
     [Tooltip("Line of sight component used to determine if the player is visible.")]
     [SerializeField] private LineOfSight lineOfSight;
+    [SerializeField] private Animator animator; // 🎯 referencia al Animator
 
     [Header("Run Settings")]
     [Tooltip("Speed at which the runner flees when the player is detected.")]
@@ -30,12 +31,15 @@ public class RunnerAI : MonoBehaviour
     private float yVel;
     private bool isGrounded;
 
-
     private CharacterController controller;
     private float lastSawPlayerTime;
     private IState currentState;
     private IdleRunnerState idleState;
     private RunAwayState runAwayState;
+    private Vector3 lastPosition;
+
+    private static readonly int SpeedParam = Animator.StringToHash("Speed");
+
     public Transform Player => player;
     public float FleeSpeed => fleeSpeed;
     public float RotationSpeed => rotationSpeed;
@@ -43,24 +47,24 @@ public class RunnerAI : MonoBehaviour
     public IdleRunnerState IdleStateInstance => idleState;
     public RunAwayState RunAwayStateInstance => runAwayState;
 
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-
         if (lineOfSight == null)
-        {
             lineOfSight = GetComponent<LineOfSight>();
-        }
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
 
         lastSawPlayerTime = -Mathf.Infinity;
+        lastPosition = transform.position;
 
         idleState = new IdleRunnerState(this);
         runAwayState = new RunAwayState(this);
     }
-    private void Start()
-    {
-        ChangeState(idleState);
-    }
+
+    private void Start() => ChangeState(idleState);
 
     private void Update()
     {
@@ -68,10 +72,24 @@ public class RunnerAI : MonoBehaviour
         isGrounded = controller.isGrounded;
         if (isGrounded && yVel < 0f)
             yVel = -2f;
-
         yVel += gravity * Time.deltaTime;
 
         currentState?.Execute();
+
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        if (animator == null) return;
+
+        Vector3 horizontalMove = transform.position - lastPosition;
+        horizontalMove.y = 0f;
+        float speed = horizontalMove.magnitude / Time.deltaTime;
+
+        animator.SetFloat(SpeedParam, speed);
+
+        lastPosition = transform.position;
     }
 
     public void ChangeState(IState next)
@@ -102,7 +120,6 @@ public class RunnerAI : MonoBehaviour
         return (Time.time - lastSawPlayerTime) <= lostSightDuration;
     }
 
-
     public void MoveInDirection(Vector3 worldDir, float speed)
     {
         worldDir.y = 0f;
@@ -124,13 +141,10 @@ public class RunnerAI : MonoBehaviour
             }
 
             if (finalDir.sqrMagnitude > 0.0001f)
-            {
                 finalDir = finalDir.normalized;
-            }
 
             move = finalDir * speed;
 
-            // Rotación solo si hay dirección horizontal real
             Quaternion targetRotation = Quaternion.LookRotation(finalDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
@@ -141,19 +155,11 @@ public class RunnerAI : MonoBehaviour
         controller.Move(move * Time.deltaTime);
     }
 
-
-
     private Vector3 ComputeObstacleAvoidance(Vector3 desiredDirection)
     {
         if (movementAvoidanceMask == 0) return Vector3.zero;
-        float radius = 0.5f;
-        float height = 1f;
-
-        if (controller != null)
-        {
-            radius = controller.radius;
-            height = controller.height;
-        }
+        float radius = controller != null ? controller.radius : 0.5f;
+        float height = controller != null ? controller.height : 1f;
 
         Vector3 origin = transform.position + Vector3.up * height * 0.5f;
         Ray ray = new Ray(origin, desiredDirection);

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class RunnerAI : MonoBehaviour
@@ -24,6 +24,12 @@ public class RunnerAI : MonoBehaviour
     [SerializeField] private float avoidDistance = 2f;
     [Tooltip("Influence of the avoidance steering vector relative to the desired flee direction.")]
     [SerializeField] private float avoidStrength = 2f;
+
+    [Header("Gravity")]
+    [SerializeField] private float gravity = -9.81f;
+    private float yVel;
+    private bool isGrounded;
+
 
     private CharacterController controller;
     private float lastSawPlayerTime;
@@ -58,6 +64,13 @@ public class RunnerAI : MonoBehaviour
 
     private void Update()
     {
+        // Ground check + acumulación de gravedad
+        isGrounded = controller.isGrounded;
+        if (isGrounded && yVel < 0f)
+            yVel = -2f;
+
+        yVel += gravity * Time.deltaTime;
+
         currentState?.Execute();
     }
 
@@ -89,29 +102,46 @@ public class RunnerAI : MonoBehaviour
         return (Time.time - lastSawPlayerTime) <= lostSightDuration;
     }
 
+
     public void MoveInDirection(Vector3 worldDir, float speed)
     {
         worldDir.y = 0f;
 
-        if (worldDir.sqrMagnitude < 0.0001f) return;
-        Vector3 desiredDir = worldDir.normalized;
-        Vector3 avoidance = ComputeObstacleAvoidance(desiredDir);
+        Vector3 move = Vector3.zero;
 
-        Vector3 finalDir = desiredDir + avoidance * avoidStrength;
-        finalDir.y = 0f;
-        if (Vector3.Dot(finalDir, desiredDir) < 0f)
+        // Movimiento horizontal solo si hay dirección válida
+        if (worldDir.sqrMagnitude >= 0.0001f)
         {
-            finalDir = desiredDir - avoidance * avoidStrength;
-        }
-        if (finalDir.sqrMagnitude > 0.0001f)
-        {
-            finalDir = finalDir.normalized;
-        }
-        controller.Move(finalDir * speed * Time.deltaTime);
+            Vector3 desiredDir = worldDir.normalized;
+            Vector3 avoidance = ComputeObstacleAvoidance(desiredDir);
 
-        Quaternion targetRotation = Quaternion.LookRotation(finalDir, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Vector3 finalDir = desiredDir + avoidance * avoidStrength;
+            finalDir.y = 0f;
+
+            if (Vector3.Dot(finalDir, desiredDir) < 0f)
+            {
+                finalDir = desiredDir - avoidance * avoidStrength;
+            }
+
+            if (finalDir.sqrMagnitude > 0.0001f)
+            {
+                finalDir = finalDir.normalized;
+            }
+
+            move = finalDir * speed;
+
+            // Rotación solo si hay dirección horizontal real
+            Quaternion targetRotation = Quaternion.LookRotation(finalDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+
+        // 🧩 Aplicar gravedad SIEMPRE
+        move.y = yVel;
+
+        controller.Move(move * Time.deltaTime);
     }
+
+
 
     private Vector3 ComputeObstacleAvoidance(Vector3 desiredDirection)
     {

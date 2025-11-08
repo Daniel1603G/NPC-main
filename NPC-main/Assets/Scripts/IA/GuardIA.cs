@@ -214,13 +214,20 @@ public class GuardAI : MonoBehaviour
 
         Vector3 finalDir = desiredDir + avoidance * avoidStrength;
         finalDir.y = 0f;
-        if (finalDir.sqrMagnitude > 0.0001f) finalDir = finalDir.normalized;
+        if (finalDir.sqrMagnitude > 0.0001f)
+            finalDir = finalDir.normalized;
 
-        controller.Move(finalDir * speed * Time.deltaTime);
+        // 🧩 --- Aplicar gravedad al movimiento ---
+        Vector3 move = finalDir * speed;
+        move.y = yVel; // usa el valor ya actualizado en Update()
+
+        controller.Move(move * Time.deltaTime);
+        // 🧩 --------------------------------------
 
         Quaternion targetRotation = Quaternion.LookRotation(finalDir, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+
 
     private Vector3 ComputeObstacleAvoidance(Vector3 desiredDirection)
     {

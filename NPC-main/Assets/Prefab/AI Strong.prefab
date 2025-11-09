@@ -337,6 +337,10 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 8
+  enableDynamicVision: 1
+  rangeVariation: 0.2
+  fovVariation: 15
+  variationInterval: 3
 --- !u!1 &3834884163476390623
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +565,6 @@ GameObject:
   - component: {fileID: 5501424819484082036}
   - component: {fileID: 2546865809387284577}
   - component: {fileID: 4047460148038027745}
-  - component: {fileID: 1091484365359613018}
   - component: {fileID: -5473129801215529375}
   m_Layer: 0
   m_Name: AI Strong
@@ -685,36 +688,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1091484365359613018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8764665915355838607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 302e401c125ca7e4297e737e9a27690c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  attackRange: 2
-  idleDuration: 2
-  gravity: -9.81
-  patrolWaypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  patrolSpeed: 6
-  arriveThreshold: 2
-  chaseSpeed: 11
-  lostSightDuration: 1.5
-  rotationSpeed: 360
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 8
-  avoidDistance: 2
-  avoidStrength: 1
-  lineOfSight: {fileID: 4520316691588151554}
 --- !u!114 &-5473129801215529375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,3 +708,6 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   dropPrefabs: []
   dropChance: 0.3
+  enableAlertOnDamage: 1
+  enableFleeAtLowHealth: 1
+  fleeHealthThreshold: 0.3

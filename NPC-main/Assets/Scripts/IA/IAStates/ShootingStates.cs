@@ -52,7 +52,7 @@ public class ShootingState : IState
         
         float distanceToPlayer = Vector3.Distance(ai.transform.position, ai.Player.position);
         
-        // Si el jugador está en rango de ataque cuerpo a cuerpo → Attack
+      
         if (ai.IsPlayerInAttackRange() && canTransition)
         {
             ai.ChangeState(ai.AttackStateInstance);
@@ -76,23 +76,23 @@ public class ShootingState : IState
     {
         Debug.Log($"{ai.name}: Saliendo de estado Shooting");
     }
-    
+    // Se mueve en base a la posicion del player
     private void PerformTacticalMovement(float distanceToPlayer)
     {
         Vector3 moveDirection = Vector3.zero;
         
-        // === MANTENER DISTANCIA ÓPTIMA ===
+       
         Vector3 toPlayer = ai.Player.position - ai.transform.position;
         toPlayer.y = 0f;
         
         if (distanceToPlayer < minShootingDistance)
         {
-            // Demasiado cerca → Retroceder
+      
             moveDirection = -toPlayer.normalized * ai.PatrolSpeed;
         }
         else if (distanceToPlayer > optimalDistance)
         {
-            // Muy lejos → Avanzar
+           
             moveDirection = toPlayer.normalized * ai.PatrolSpeed * 0.7f;
         }
         

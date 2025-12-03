@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Boid 3D con flocking constante y movimiento natural.
-/// SIN rotaciones raras, SOLO movimiento suave.
-/// </summary>
+
 public class Boid3D : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] protected float maxSpeed = 5f;
     [SerializeField] protected float maxForce = 8f;
-    [SerializeField] protected float rotationSmoothTime = 0.3f; // Suavizado de rotación
+    [SerializeField] protected float rotationSmoothTime = 0.3f; 
     
     [Header("3D Flight Settings")]
     [SerializeField]public float minFlightHeight = 3f;
@@ -41,10 +38,10 @@ public class Boid3D : MonoBehaviour
             FlockingManager3D.Instance.AddBoid(this);
         }
         
-        // Offset único para movimiento ondulante
+       
         bobOffset = Random.Range(0f, Mathf.PI * 2f);
         
-        // Velocidad inicial aleatoria suave
+        
         Vector3 randomDir = new Vector3(
             Random.Range(-1f, 1f),
             0f,
@@ -58,57 +55,49 @@ public class Boid3D : MonoBehaviour
     
     void Update()
     {
-        // === FLOCKING SIEMPRE ACTIVO ===
+   
         Vector3 flockingForce = Flocking();
         
-        // Agregar objetivo si existe (patrol o chase)
+   
         if (hasTarget)
         {
             Vector3 seekForce = Seek(targetPosition);
-            flockingForce += seekForce * 0.4f; // 40% peso del objetivo
+            flockingForce += seekForce * 0.4f; 
         }
         
         AddForce(flockingForce);
         
-        // Mantener altura
+        
         MaintainFlightHeight();
         
-        // Movimiento ondulante sutil
+       
         if (enableSubtleBob)
             ApplySubtleBob();
         
-        // Moverse
+        
         Move();
     }
     
-    /// <summary>
-    /// Establece un objetivo para el boid.
-    /// </summary>
+  
     public void SetTarget(Vector3 target)
     {
         targetPosition = target;
         hasTarget = true;
     }
     
-    /// <summary>
-    /// Limpia el objetivo.
-    /// </summary>
+  
     public void ClearTarget()
     {
         hasTarget = false;
     }
     
-    /// <summary>
-    /// Ajusta la velocidad máxima dinámicamente.
-    /// </summary>
+   
     public void SetMaxSpeed(float speed)
     {
         maxSpeed = speed;
     }
     
-    /// <summary>
-    /// Movimiento ondulante MUY sutil (no mareante).
-    /// </summary>
+   
     private void ApplySubtleBob()
     {
         float bob = Mathf.Sin((Time.time + bobOffset) * bobFrequency) * bobAmplitude;
@@ -120,7 +109,7 @@ public class Boid3D : MonoBehaviour
     {
         Vector3 flockingForce = Vector3.zero;
         
-        // Solo aplicar flocking si hay otros boids cerca
+      
         if (AllBoids.Count > 1)
         {
             flockingForce = 
@@ -147,7 +136,7 @@ public class Boid3D : MonoBehaviour
             
             if (magnitude > FM.separationRadius || magnitude < 0.01f) continue;
             
-            // Inversamente proporcional a la distancia
+         
             dir = (dir / magnitude) * (1f / magnitude);
             totalDir += dir;
             count++;
@@ -221,12 +210,12 @@ public class Boid3D : MonoBehaviour
         }
     }
     
-    // === STEERING METHODS ===
+   
     
     public Vector3 Seek(Vector3 position)
     {
         Vector3 desired = position - transform.position;
-        desired.y *= 0.5f; // Reducir movimiento vertical brusco
+        desired.y *= 0.5f; 
         return Steer(desired.normalized * maxSpeed);
     }
     
@@ -241,22 +230,20 @@ public class Boid3D : MonoBehaviour
         velocity = Vector3.ClampMagnitude(velocity + force, maxSpeed);
     }
     
-    /// <summary>
-    /// Movimiento y rotación SUAVE sin giros raros.
-    /// </summary>
+   
     public void Move()
     {
         if (velocity.sqrMagnitude < 0.01f) return;
         
-        // Movimiento
+        
         transform.position += velocity * Time.deltaTime;
         
-        // Rotación SUAVE solo en el plano horizontal
+       
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0f, velocity.z);
         
         if (horizontalVelocity.sqrMagnitude > 0.1f)
         {
-            // Usar SmoothDamp para rotación ultra suave
+         
             Quaternion targetRotation = Quaternion.LookRotation(horizontalVelocity, Vector3.up);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
@@ -264,30 +251,5 @@ public class Boid3D : MonoBehaviour
                 Time.deltaTime / rotationSmoothTime
             );
         }
-    }
-    
-    private void OnDrawGizmosSelected()
-    {
-        if (FM == null) return;
-        
-        // Cohesión
-        Gizmos.color = new Color(0f, 1f, 1f, 0.3f);
-        Gizmos.DrawWireSphere(transform.position, FM.cohesionRadius);
-        
-        // Separación
-        Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
-        Gizmos.DrawWireSphere(transform.position, FM.separationRadius);
-        
-        // Objetivo actual
-        if (hasTarget)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, targetPosition);
-            Gizmos.DrawWireSphere(targetPosition, 0.5f);
-        }
-        
-        // Dirección de velocidad
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, velocity.normalized * 2f);
     }
 }

@@ -295,9 +295,6 @@ public class GuardAI : MonoBehaviour
     
     private void OnReceivedDamage(Vector3 damageDirection)
     {
-        Debug.Log($"{gameObject.name}: ¡Recibí daño desde {damageDirection}!");
-    
-
         if (currentState != attackState && currentState != shootingState)
         {
            

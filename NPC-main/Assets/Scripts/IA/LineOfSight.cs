@@ -47,16 +47,13 @@ public class LineOfSight : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Actualiza la variación aleatoria de visión.
-    /// Simula que el enemigo está más o menos alerta.
-    /// </summary>
+ 
     private void UpdateVisionVariation()
     {
-        // Variación del rango: entre (1 - variation) y (1 + variation)
+        
         currentRangeMultiplier = 1f + Random.Range(-rangeVariation, rangeVariation);
         
-        // Variación del FOV: entre -fovVariation y +fovVariation
+        
         currentFOVOffset = Random.Range(-fovVariation, fovVariation);
     }
 
@@ -69,11 +66,11 @@ public class LineOfSight : MonoBehaviour
         Vector3 direction = targetPos - origin;
         float distance = direction.magnitude;
 
-        // Aplicar variación de rango
+  
         float effectiveRange = detectionRange * currentRangeMultiplier;
         if (distance > effectiveRange) return false;
 
-        // Aplicar variación de FOV
+   
         float effectiveFOV = fieldOfViewAngle + currentFOVOffset;
         float angle = Vector3.Angle(transform.forward, direction);
         if (angle > effectiveFOV * 0.5f) return false;

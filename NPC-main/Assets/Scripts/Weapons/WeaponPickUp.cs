@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Caja de arma que el jugador puede recoger.
-/// Similar a PowerUpPickup pero para armas.
-/// Usa Roulette Wheel Selection para elegir arma aleatoria.
-/// </summary>
+
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponPickup : MonoBehaviour
@@ -63,9 +59,7 @@ public class WeaponPickup : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Anima la caja (rotación y flotación).
-    /// </summary>
+   
     private void AnimatePickup()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
@@ -74,9 +68,7 @@ public class WeaponPickup : MonoBehaviour
         transform.position = new Vector3(startPosition.x, newY, startPosition.z);
     }
     
-    /// <summary>
-    /// Configura armas por defecto si no hay ninguna asignada.
-    /// </summary>
+   
     private void SetupDefaultWeapons()
     {
         Debug.LogWarning($"No hay armas configuradas en {gameObject.name}. Por favor asigna WeaponData en el inspector.");
@@ -89,7 +81,7 @@ public class WeaponPickup : MonoBehaviour
         var weaponManager = other.GetComponent<WeaponManager>();
         if (weaponManager == null) return;
         
-        // Seleccionar arma usando Roulette Wheel Selection
+ 
         WeaponData selectedWeapon = SelectWeaponRouletteWheel();
         if (selectedWeapon != null)
         {
@@ -97,15 +89,12 @@ public class WeaponPickup : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Selecciona un arma usando Roulette Wheel Selection.
-    /// Las armas con mayor peso tienen más probabilidad de salir.
-    /// </summary>
+  
     private WeaponData SelectWeaponRouletteWheel()
     {
         if (availableWeapons.Count == 0) return null;
         
-        // Calcular peso total
+       
         float totalWeight = 0f;
         foreach (var weaponDrop in availableWeapons)
         {
@@ -115,11 +104,11 @@ public class WeaponPickup : MonoBehaviour
         
         if (totalWeight <= 0f) return null;
         
-        // Generar número aleatorio en el rango del peso total
+     
         float randomValue = Random.Range(0f, totalWeight);
         float currentWeight = 0f;
         
-        // Iterar hasta encontrar el arma seleccionada
+       
         foreach (var weaponDrop in availableWeapons)
         {
             if (weaponDrop.weaponData == null) continue;
@@ -132,27 +121,25 @@ public class WeaponPickup : MonoBehaviour
             }
         }
         
-        // Fallback: devolver la última arma
+       
         return availableWeapons[availableWeapons.Count - 1].weaponData;
     }
     
-    /// <summary>
-    /// Da el arma al jugador.
-    /// </summary>
+  
     private void GiveWeaponToPlayer(WeaponManager weaponManager, WeaponData weaponData)
     {
         isCollected = true;
         
-        // Crear instancia del arma
+  
         Weapon newWeapon = weaponManager.CreateWeaponFromData(weaponData);
         
-        // Dársela al jugador
+     
         weaponManager.PickupWeapon(newWeapon);
         
-        // Efectos
+   
         PlayPickupEffects();
         
-        // Respawn o destruir
+  
         if (respawns)
         {
             StartCoroutine(RespawnAfterDelay());
@@ -163,9 +150,7 @@ public class WeaponPickup : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Reproduce efectos visuales y de audio.
-    /// </summary>
+ 
     private void PlayPickupEffects()
     {
         if (pickupSound != null)
@@ -175,9 +160,7 @@ public class WeaponPickup : MonoBehaviour
             Instantiate(visualEffect, transform.position, Quaternion.identity);
     }
     
-    /// <summary>
-    /// Reaparece la caja después del tiempo configurado.
-    /// </summary>
+
     private System.Collections.IEnumerator RespawnAfterDelay()
     {
         gameObject.SetActive(false);
@@ -194,10 +177,7 @@ public class WeaponPickup : MonoBehaviour
     }
 }
 
-/// <summary>
-/// Estructura que asocia un WeaponData con su peso de probabilidad.
-/// Usada para Roulette Wheel Selection.
-/// </summary>
+
 [System.Serializable]
 public class WeaponDropData
 {

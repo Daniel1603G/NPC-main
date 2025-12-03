@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// ScriptableObject que contiene los datos configurables de cada arma.
-/// Permite crear diferentes configuraciones sin tocar código.
-/// </summary>
+
 [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Weapons/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
